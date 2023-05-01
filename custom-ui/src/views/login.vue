@@ -24,16 +24,25 @@
         </el-input>
       </el-form-item>
       <el-checkbox v-model="loginForm.rememberMe" style="margin:0px 0px 25px 0px;">记住密码</el-checkbox>
-      <el-form-item style="width:100%;">
+      <el-form-item  style="width:100%">
         <el-button
           :loading="loading"
           size="medium"
           type="primary"
-          style="width:100%;"
+          style="width:30%;;margin-left:50px"
           @click.native.prevent="handleLogin"
         >
           <span v-if="!loading">登 录</span>
           <span v-else>登 录 中...</span>
+        </el-button>
+        <el-button
+          :loading="loading"
+          type="info"
+          size="medium"
+          style="width:30%;;"
+          @click.native.prevent="handleLink"
+        >
+          <span>注 册</span>
         </el-button>
         <div style="float: right;" v-if="register">
           <router-link class="link-type" :to="'/register'">立即注册</router-link>
@@ -92,6 +101,9 @@ export default {
     this.getCookie();
   },
   methods: {
+    handleLink() {
+      this.$router.push('/register')
+    },
 
     getCookie() {
       const username = Cookies.get("username");

@@ -11,6 +11,7 @@ import com.ysir.custom.service.impl.SysLoginService;
 import com.ysir.custom.service.impl.SysPermissionService;
 import com.ysir.custom.util.ServerConfigUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,6 +19,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.Set;
+
+import static com.ysir.custom.common.AjaxResult.error;
+import static com.ysir.custom.common.AjaxResult.success;
 
 /**
  * 登录验证
@@ -42,11 +46,18 @@ public class SysLoginController {
      */
     @PostMapping("/login")
     public AjaxResult login(@RequestBody LoginBody loginBody) {
-        AjaxResult ajax = AjaxResult.success();
+        AjaxResult ajax = success();
         // 生成令牌
         String token = loginService.login(loginBody.getUsername(), loginBody.getPassword());
         ajax.put(GlobalConstants.TOKEN, token);
         return ajax;
+    }
+
+    @PostMapping("/register")
+    public AjaxResult register(@RequestBody LoginBody user) {
+
+        String msg = loginService.register(user);
+        return StringUtils.isEmpty(msg) ? success() : error(msg);
     }
 
     /**
@@ -61,7 +72,7 @@ public class SysLoginController {
         Set<String> roles = permissionService.getRolePermission(user);
         // 权限集合
         Set<String> permissions = permissionService.getMenuPermission(user);
-        AjaxResult ajax = AjaxResult.success();
+        AjaxResult ajax = success();
         ajax.put("user", user);
         ajax.put("roles", roles);
         ajax.put("permissions", permissions);
@@ -77,6 +88,6 @@ public class SysLoginController {
     public AjaxResult getRouters() {
         Long userId = ServerConfigUtil.getUserId();
         List<SysMenu> menus = menuService.selectMenuTreeByUserId(userId);
-        return AjaxResult.success(menuService.buildMenus(menus));
+        return success(menuService.buildMenus(menus));
     }
 }
