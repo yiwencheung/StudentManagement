@@ -12,7 +12,6 @@ import java.util.List;
 
 /**
  * 菜单信息
- *
  */
 @RestController
 @RequestMapping("/system/menu")
@@ -82,6 +81,9 @@ public class SysMenuController extends BaseController {
      */
     @DeleteMapping("/{menuId}")
     public AjaxResult remove(@PathVariable("menuId") Long menuId) {
+        if (menuService.hasChildByMenuId(menuId)) {
+            return warn("存在子菜单,不允许删除");
+        }
 
         return toAjax(menuService.deleteMenuById(menuId));
     }

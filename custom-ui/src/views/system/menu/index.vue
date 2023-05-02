@@ -38,7 +38,7 @@
       <el-table-column prop="component" label="组件路径" :show-overflow-tooltip="true"></el-table-column>
       <el-table-column prop="status" label="状态" width="80">
         <template slot-scope="scope">
-          <el-switch v-model="scope.row.status" active-value="0" inactive-value="1"></el-switch>
+          <el-switch  @change="handleStatusChange(scope.row)" v-model="scope.row.status" active-value="0" inactive-value="1"></el-switch>
         </template>
       </el-table-column>
       <el-table-column label="创建时间" align="center" prop="createTime">
@@ -251,6 +251,18 @@
       this.getList();
     },
     methods: {
+      handleStatusChange(row) {
+        let text = row.status === "0" ? "启用" : "停用";
+        this.$modal.confirm('确认要"' + text + '""' + row.userName + '"菜单吗？').then(function() {
+          return updateMenu({
+            'menuId':row.menuId,'status': row.status
+          });
+        }).then(() => {
+          this.$modal.msgSuccess(text + "成功");
+        }).catch(function() {
+          row.status = row.status === "0" ? "1" : "0";
+        });
+      },
       // 选择图标
       selected(name) {
         this.form.icon = name;
