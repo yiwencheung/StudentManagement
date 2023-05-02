@@ -34,9 +34,9 @@ spring:
       enabled: true
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://42.193.16.11:3307/custom?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+    url: jdbc:mysql://121.4.40.236:3306/custom?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
     username: root
-    password: Vue808080
+    password: admin1234
     hikari:
       max-lifetime: 120000
 
