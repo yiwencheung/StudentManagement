@@ -10,7 +10,7 @@ public class GlobalConstants {
     /**
      * 令牌前缀
      */
-    public static final String TOKEN_PREFIX = "custom_token ";
+    public static final String TOKEN_PREFIX = "Bearer ";
 
     /**
      * 令牌前缀
