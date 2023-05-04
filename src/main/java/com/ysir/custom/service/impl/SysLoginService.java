@@ -1,14 +1,17 @@
 package com.ysir.custom.service.impl;
 
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.ysir.custom.common.LoginBody;
 import com.ysir.custom.common.LoginUser;
+import com.ysir.custom.entity.SysRole;
 import com.ysir.custom.entity.SysRoleMenu;
 import com.ysir.custom.entity.SysUser;
 import com.ysir.custom.entity.SysUserRole;
 import com.ysir.custom.jwt.TokenService;
+import com.ysir.custom.mapper.SysRoleMapper;
 import com.ysir.custom.mapper.SysRoleMenuMapper;
 import com.ysir.custom.mapper.SysUserMapper;
 import com.ysir.custom.mapper.SysUserRoleMapper;
@@ -22,7 +25,9 @@ import org.springframework.util.StringUtils;
 import sun.misc.MessageUtils;
 
 import javax.annotation.Resource;
+import javax.management.relation.Role;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * 登录校验方法
@@ -39,7 +44,8 @@ public class SysLoginService {
     @Autowired
     private SysUserRoleMapper sysUserRoleMapper;
 
-
+    @Autowired
+    private SysRoleMapper sysRoleMapper;
 
     @Resource
     private AuthenticationManager authenticationManager;
@@ -89,11 +95,16 @@ public class SysLoginService {
         if (res <= 0) {
             msg = "注册失败,请联系系统管理人员";
         }
-        //设置默认角色，角色ID为3
-        SysUserRole sysUserRole = new SysUserRole();
-        sysUserRole.setRoleId(3L);
-        sysUserRole.setUserId(sysUser.getUserId());
-        sysUserRoleMapper.batchUserRole(Arrays.asList(sysUserRole));
+        //设置默认角色
+        SysRole sysRole = new SysRole();
+        sysRole.setDefault(true);
+        List<SysRole> sysRoles = sysRoleMapper.selectRoleList(sysRole);
+        if (CollUtil.isNotEmpty(sysRoles)){
+            SysUserRole sysUserRole = new SysUserRole();
+            sysUserRole.setRoleId(sysRoles.get(0).getRoleId());
+            sysUserRole.setUserId(sysUser.getUserId());
+            sysUserRoleMapper.batchUserRole(Arrays.asList(sysUserRole));
+        }
         return msg;
     }
 }

@@ -30,7 +30,7 @@ public class BaseController {
         HttpServletRequest request = attributes.getRequest();
         PageDomain pageDomain = new PageDomain();
         pageDomain.setPageNum(Convert.toInt(request.getParameter("pageNum"), 1));
-        pageDomain.setPageSize(Convert.toInt(request.getParameter("pageSize"), 10));
+        pageDomain.setPageSize(Convert.toInt(request.getParameter("pageSize"), 999));
         pageDomain.setOrderBy(request.getParameter("orderBy"));
         Integer pageNum = pageDomain.getPageNum();
         Integer pageSize = pageDomain.getPageSize();

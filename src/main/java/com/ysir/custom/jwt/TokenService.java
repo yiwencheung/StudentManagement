@@ -8,7 +8,6 @@ import cn.hutool.jwt.Claims;
 import cn.hutool.jwt.JWTUtil;
 import com.ysir.custom.cache.GlobalCache;
 import com.ysir.custom.common.LoginUser;
-import com.ysir.custom.constant.CacheConstants;
 import com.ysir.custom.constant.GlobalConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,6 +18,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
+
+import static com.ysir.custom.constant.GlobalConstants.LOGIN_TOKEN_KEY;
 
 /**
  * token验证处理
@@ -57,7 +58,6 @@ public class TokenService {
         if (StrUtil.isNotBlank(token)) {
             try {
                 Claims claims = parseToken(token);
-
                 // 解析对应的权限以及用户信息
                 String uuid = (String) claims.getClaim(GlobalConstants.LOGIN_USER_KEY);
                 String userKey = getTokenKey(uuid);
@@ -167,6 +167,6 @@ public class TokenService {
     }
 
     private String getTokenKey(String uuid) {
-        return CacheConstants.LOGIN_TOKEN_KEY + uuid;
+        return LOGIN_TOKEN_KEY + uuid;
     }
 }

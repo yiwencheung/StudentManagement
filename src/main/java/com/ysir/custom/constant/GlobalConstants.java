@@ -10,7 +10,7 @@ public class GlobalConstants {
     /**
      * 令牌前缀
      */
-    public static final String TOKEN_PREFIX = "Bearer ";
+    public static final String TOKEN_PREFIX = "custom_token ";
 
     /**
      * 令牌前缀
@@ -23,7 +23,10 @@ public class GlobalConstants {
      */
     public static final String RESOURCE_PREFIX = "/profile";
 
-
+    /**
+     * 登录用户 cache key
+     */
+    public static final String LOGIN_TOKEN_KEY = "login_tokens:";
 
     /** 是否菜单外链（否） */
     public static final String NO_FRAME = "1";

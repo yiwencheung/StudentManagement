@@ -4,6 +4,11 @@ import lombok.Data;
 
 @Data
 public class PageDomain {
+
+
+    private static final long serialVersionUID = 1L;
+
+
     /**
      * 当前记录起始索引
      */

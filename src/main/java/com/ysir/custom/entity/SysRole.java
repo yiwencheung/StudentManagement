@@ -64,6 +64,11 @@ public class SysRole extends BaseEntity {
     private boolean flag = false;
 
     /**
+     * 用户是否存在此角色标识 默认不存在
+     */
+    private boolean isDefault = false;
+
+    /**
      * 菜单组
      */
     private Long[] menuIds;

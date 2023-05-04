@@ -1,6 +1,7 @@
 package com.ysir.custom.controller;
 
 
+import cn.hutool.core.util.StrUtil;
 import com.ysir.custom.common.AjaxResult;
 import com.ysir.custom.common.LoginBody;
 import com.ysir.custom.constant.GlobalConstants;
@@ -57,7 +58,7 @@ public class SysLoginController {
     public AjaxResult register(@RequestBody LoginBody user) {
 
         String msg = loginService.register(user);
-        return StringUtils.isEmpty(msg) ? success() : error(msg);
+        return StrUtil.isBlank(msg) ? success() : error(msg);
     }
 
     /**
