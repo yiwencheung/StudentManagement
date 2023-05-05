@@ -25,9 +25,9 @@ spring:
       enabled: true
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://121.4.40.236:3306/custom?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+    url: jdbc:mysql://43.138.159.237:3303/custom?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
     username: root
-    password: admin1234
+    password: ysir123456
     hikari:
       max-lifetime: 120000
 
