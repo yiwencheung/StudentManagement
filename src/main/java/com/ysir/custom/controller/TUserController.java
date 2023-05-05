@@ -9,8 +9,8 @@ import com.ysir.custom.config.CustomConfig;
 import com.ysir.custom.entity.TRole;
 import com.ysir.custom.entity.TUser;
 import com.ysir.custom.jwt.TokenService;
-import com.ysir.custom.service.ISysRoleService;
-import com.ysir.custom.service.ISysUserService;
+import com.ysir.custom.service.ITRoleService;
+import com.ysir.custom.service.ITUserService;
 import com.ysir.custom.util.ServerConfigUtil;
 import com.ysir.custom.util.file.FileUploadUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,12 +26,12 @@ import java.util.stream.Collectors;
  */
 @RestController
 @RequestMapping("/custom/user")
-public class SysUserController extends BaseController {
+public class TUserController extends BaseController {
     @Autowired
-    private ISysUserService userService;
+    private ITUserService userService;
 
     @Autowired
-    private ISysRoleService roleService;
+    private ITRoleService roleService;
 
     @Autowired
     private TokenService tokenService;

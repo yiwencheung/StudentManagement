@@ -7,9 +7,9 @@ import com.ysir.custom.common.LoginBody;
 import com.ysir.custom.constant.GlobalConstants;
 import com.ysir.custom.entity.TMenu;
 import com.ysir.custom.entity.TUser;
-import com.ysir.custom.service.ISysMenuService;
-import com.ysir.custom.service.impl.SysLoginService;
-import com.ysir.custom.service.impl.SysPermissionService;
+import com.ysir.custom.service.ITMenuService;
+import com.ysir.custom.service.impl.LoginService;
+import com.ysir.custom.service.impl.PermissionService;
 import com.ysir.custom.util.ServerConfigUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,13 +30,13 @@ import static com.ysir.custom.common.AjaxResult.success;
 public class LoginController {
 
     @Autowired
-    private SysLoginService loginService;
+    private LoginService loginService;
 
     @Autowired
-    private ISysMenuService menuService;
+    private ITMenuService menuService;
 
     @Autowired
-    private SysPermissionService permissionService;
+    private PermissionService permissionService;
 
     /**
      * 登录方法

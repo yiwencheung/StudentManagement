@@ -11,7 +11,7 @@ import java.util.Set;
  * 角色业务层
  *
  */
-public interface ISysRoleService {
+public interface ITRoleService {
     /**
      * 根据条件分页查询角色数据
      *

@@ -8,11 +8,11 @@ import com.ysir.custom.constant.GlobalConstants;
 import com.ysir.custom.entity.TMenu;
 import com.ysir.custom.entity.TRole;
 import com.ysir.custom.entity.TUser;
-import com.ysir.custom.mapper.SysMenuMapper;
-import com.ysir.custom.mapper.SysRoleMapper;
-import com.ysir.custom.mapper.SysRoleMenuMapper;
-import com.ysir.custom.mapper.SysUserMapper;
-import com.ysir.custom.service.ISysMenuService;
+import com.ysir.custom.mapper.TMenuMapper;
+import com.ysir.custom.mapper.TRoleMapper;
+import com.ysir.custom.mapper.TRoleMenuMapper;
+import com.ysir.custom.mapper.TUserMapper;
+import com.ysir.custom.service.ITMenuService;
 import com.ysir.custom.vo.MetaVo;
 import com.ysir.custom.vo.RouterVo;
 import com.ysir.custom.vo.TreeSelect;
@@ -27,19 +27,19 @@ import java.util.stream.Collectors;
  * 菜单 业务层处理
  */
 @Service
-public class SysMenuServiceImpl implements ISysMenuService {
+public class TMenuServiceImpl implements ITMenuService {
 
     @Autowired
-    private SysMenuMapper menuMapper;
+    private TMenuMapper menuMapper;
 
     @Autowired
-    private SysRoleMapper roleMapper;
+    private TRoleMapper roleMapper;
 
     @Autowired
-    private SysRoleMenuMapper roleMenuMapper;
+    private TRoleMenuMapper roleMenuMapper;
 
     @Autowired
-    private SysUserMapper userMapper;
+    private TUserMapper userMapper;
 
     /**
      * 根据用户查询系统菜单列表

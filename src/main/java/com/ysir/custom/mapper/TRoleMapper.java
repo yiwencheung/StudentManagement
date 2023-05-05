@@ -9,7 +9,7 @@ import java.util.List;
  * 角色表 数据层
  *
  */
-public interface SysRoleMapper {
+public interface TRoleMapper {
     /**
      * 根据条件分页查询角色数据
      *

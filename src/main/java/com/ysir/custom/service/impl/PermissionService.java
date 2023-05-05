@@ -2,8 +2,8 @@ package com.ysir.custom.service.impl;
 
 import com.ysir.custom.entity.TRole;
 import com.ysir.custom.entity.TUser;
-import com.ysir.custom.service.ISysMenuService;
-import com.ysir.custom.service.ISysRoleService;
+import com.ysir.custom.service.ITMenuService;
+import com.ysir.custom.service.ITRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -15,13 +15,13 @@ import java.util.Set;
  * 用户权限处理
  */
 @Component
-public class SysPermissionService {
+public class PermissionService {
 
     @Autowired
-    private ISysRoleService roleService;
+    private ITRoleService roleService;
 
     @Autowired
-    private ISysMenuService menuService;
+    private ITMenuService menuService;
 
     /**
      * 获取角色数据权限

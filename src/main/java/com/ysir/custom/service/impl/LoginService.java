@@ -10,9 +10,9 @@ import com.ysir.custom.entity.TRole;
 import com.ysir.custom.entity.TUser;
 import com.ysir.custom.entity.TUserRole;
 import com.ysir.custom.jwt.TokenService;
-import com.ysir.custom.mapper.SysRoleMapper;
-import com.ysir.custom.mapper.SysUserMapper;
-import com.ysir.custom.mapper.SysUserRoleMapper;
+import com.ysir.custom.mapper.TRoleMapper;
+import com.ysir.custom.mapper.TUserMapper;
+import com.ysir.custom.mapper.TUserRoleMapper;
 import com.ysir.custom.util.ServerConfigUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -28,19 +28,19 @@ import java.util.List;
  * 登录校验方法
  */
 @Component
-public class SysLoginService {
+public class LoginService {
 
     @Autowired
     private TokenService tokenService;
 
     @Autowired
-    private SysUserMapper sysUserMapper;
+    private TUserMapper tUserMapper;
 
     @Autowired
-    private SysUserRoleMapper sysUserRoleMapper;
+    private TUserRoleMapper tUserRoleMapper;
 
     @Autowired
-    private SysRoleMapper sysRoleMapper;
+    private TRoleMapper tRoleMapper;
 
     @Resource
     private AuthenticationManager authenticationManager;
@@ -81,24 +81,24 @@ public class SysLoginService {
             msg = "用户名不能为空";
         } else if (StrUtil.isBlank(password)) {
             msg = "用户密码不能为空";
-        } else if (ObjectUtil.isNotEmpty(sysUserMapper.selectUserByUserName(username))) {
+        } else if (ObjectUtil.isNotEmpty(tUserMapper.selectUserByUserName(username))) {
             msg = "保存用户'" + username + "'失败，注册账号已存在";
         }
         tUser.setNickName(username);
         tUser.setPassword(ServerConfigUtil.encryptPassword(password));
-        int res = sysUserMapper.insertUser(tUser);
+        int res = tUserMapper.insertUser(tUser);
         if (res <= 0) {
             msg = "注册失败,请联系系统管理人员";
         }
         //设置默认角色
         TRole tRole = new TRole();
         tRole.setDefault(true);
-        List<TRole> tRoles = sysRoleMapper.selectRoleList(tRole);
+        List<TRole> tRoles = tRoleMapper.selectRoleList(tRole);
         if (CollUtil.isNotEmpty(tRoles)){
             TUserRole tUserRole = new TUserRole();
             tUserRole.setRoleId(tRoles.get(0).getRoleId());
             tUserRole.setUserId(tUser.getUserId());
-            sysUserRoleMapper.batchUserRole(Arrays.asList(tUserRole));
+            tUserRoleMapper.batchUserRole(Arrays.asList(tUserRole));
         }
         return msg;
     }

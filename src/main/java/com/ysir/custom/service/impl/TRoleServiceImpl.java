@@ -5,10 +5,10 @@ import cn.hutool.core.util.ObjectUtil;
 import com.ysir.custom.entity.TRole;
 import com.ysir.custom.entity.TRoleMenu;
 import com.ysir.custom.entity.TUserRole;
-import com.ysir.custom.mapper.SysRoleMapper;
-import com.ysir.custom.mapper.SysRoleMenuMapper;
-import com.ysir.custom.mapper.SysUserRoleMapper;
-import com.ysir.custom.service.ISysRoleService;
+import com.ysir.custom.mapper.TRoleMapper;
+import com.ysir.custom.mapper.TRoleMenuMapper;
+import com.ysir.custom.mapper.TUserRoleMapper;
+import com.ysir.custom.service.ITRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,15 +20,15 @@ import java.util.*;
  *
  */
 @Service
-public class SysRoleServiceImpl implements ISysRoleService {
+public class TRoleServiceImpl implements ITRoleService {
     @Autowired
-    private SysRoleMapper roleMapper;
+    private TRoleMapper roleMapper;
 
     @Autowired
-    private SysRoleMenuMapper roleMenuMapper;
+    private TRoleMenuMapper roleMenuMapper;
 
     @Autowired
-    private SysUserRoleMapper userRoleMapper;
+    private TUserRoleMapper userRoleMapper;
 
 
     /**

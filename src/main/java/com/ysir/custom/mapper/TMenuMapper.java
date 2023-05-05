@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * 菜单表 数据层
  */
-public interface SysMenuMapper {
+public interface TMenuMapper {
     /**
      * 查询系统菜单列表
      *

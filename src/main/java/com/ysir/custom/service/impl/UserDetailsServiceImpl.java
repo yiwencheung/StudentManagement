@@ -3,7 +3,7 @@ package com.ysir.custom.service.impl;
 import cn.hutool.core.util.ObjectUtil;
 import com.ysir.custom.common.LoginUser;
 import com.ysir.custom.entity.TUser;
-import com.ysir.custom.service.ISysUserService;
+import com.ysir.custom.service.ITUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -18,10 +18,10 @@ import org.springframework.stereotype.Service;
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
-    private ISysUserService userService;
+    private ITUserService userService;
 
     @Autowired
-    private SysPermissionService permissionService;
+    private PermissionService permissionService;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

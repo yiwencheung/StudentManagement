@@ -9,7 +9,7 @@ import java.util.List;
  * 用户 业务层
  *
  */
-public interface ISysUserService {
+public interface ITUserService {
     /**
      * 根据条件分页查询用户列表
      *

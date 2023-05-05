@@ -9,7 +9,7 @@ import java.util.List;
  * 角色与菜单关联表 数据层
  *
  */
-public interface SysRoleMenuMapper {
+public interface TRoleMenuMapper {
     /**
      * 查询菜单使用数量
      *

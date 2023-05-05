@@ -9,9 +9,9 @@ import com.ysir.custom.entity.TRole;
 import com.ysir.custom.entity.TUser;
 import com.ysir.custom.entity.TUserRole;
 import com.ysir.custom.jwt.TokenService;
-import com.ysir.custom.service.ISysRoleService;
-import com.ysir.custom.service.ISysUserService;
-import com.ysir.custom.service.impl.SysPermissionService;
+import com.ysir.custom.service.ITRoleService;
+import com.ysir.custom.service.ITUserService;
+import com.ysir.custom.service.impl.PermissionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -24,19 +24,19 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/custom/role")
-public class SysRoleController extends BaseController {
+public class TRoleController extends BaseController {
 
     @Autowired
-    private ISysRoleService roleService;
+    private ITRoleService roleService;
 
     @Autowired
     private TokenService tokenService;
 
     @Autowired
-    private SysPermissionService permissionService;
+    private PermissionService permissionService;
 
     @Autowired
-    private ISysUserService userService;
+    private ITUserService userService;
 
 
     @GetMapping("/list")

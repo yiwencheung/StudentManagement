@@ -11,7 +11,7 @@ import java.util.Set;
 /**
  * 菜单 业务层
  */
-public interface ISysMenuService {
+public interface ITMenuService {
     /**
      * 根据用户查询系统菜单列表
      *

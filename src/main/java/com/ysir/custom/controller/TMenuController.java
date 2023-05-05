@@ -3,7 +3,7 @@ package com.ysir.custom.controller;
 
 import com.ysir.custom.common.AjaxResult;
 import com.ysir.custom.entity.TMenu;
-import com.ysir.custom.service.ISysMenuService;
+import com.ysir.custom.service.ITMenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -15,10 +15,10 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/custom/menu")
-public class SysMenuController extends BaseController {
+public class TMenuController extends BaseController {
 
     @Autowired
-    private ISysMenuService menuService;
+    private ITMenuService menuService;
 
     /**
      * 获取菜单列表

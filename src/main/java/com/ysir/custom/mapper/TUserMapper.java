@@ -9,7 +9,7 @@ import java.util.List;
  * 用户表 数据层
  *
  */
-public interface SysUserMapper {
+public interface TUserMapper {
     /**
      * 根据条件分页查询用户列表
      *
