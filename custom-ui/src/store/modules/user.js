@@ -4,7 +4,9 @@ import { getToken, setToken, removeToken } from '@/utils/auth'
 const user = {
   state: {
     token: getToken(),
+    id:'',
     name: '',
+    nickName:'',
     avatar: '',
     roles: [],
     permissions: []
@@ -16,6 +18,12 @@ const user = {
     },
     SET_NAME: (state, name) => {
       state.name = name
+    },
+    SET_ID: (state, id) => {
+      state.id = id
+    },
+    SET_NICKNAME: (state, nickName) => {
+      state.nickName = nickName
     },
     SET_AVATAR: (state, avatar) => {
       state.avatar = avatar
@@ -59,7 +67,9 @@ const user = {
             commit('SET_ROLES', ['ROLE_DEFAULT'])
           }
           commit('SET_NAME', user.userName)
+          commit('SET_NICKNAME', user.nickName)
           commit('SET_AVATAR', avatar)
+          commit('SET_ID', user.userId)
           resolve(res)
         }).catch(error => {
           reject(error)

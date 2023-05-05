@@ -9,8 +9,11 @@ export default {
   name: "Index",
   data() {
     return {
-     
+
     };
+  },
+  created() {
+    console.log(this.$store.state.user.nickName)
   },
   methods: {
     goTarget(href) {

@@ -35,8 +35,7 @@ import Hamburger from '@/components/Hamburger'
 import Screenfull from '@/components/Screenfull'
 import SizeSelect from '@/components/SizeSelect'
 import Search from '@/components/HeaderSearch'
-import RuoYiGit from '@/components/RuoYi/Git'
-import RuoYiDoc from '@/components/RuoYi/Doc'
+
 
 export default {
   components: {
@@ -45,9 +44,7 @@ export default {
     Hamburger,
     Screenfull,
     SizeSelect,
-    Search,
-    RuoYiGit,
-    RuoYiDoc
+    Search
   },
   computed: {
     ...mapGetters([
