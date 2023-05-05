@@ -181,22 +181,5 @@ INSERT INTO `sys_user_role` VALUES (1, 1);
 INSERT INTO `sys_user_role` VALUES (2, 1);
 INSERT INTO `sys_user_role` VALUES (2, 2);
 
--- ----------------------------
--- Table structure for t_security_level
--- ----------------------------
-DROP TABLE IF EXISTS `t_security_level`;
-CREATE TABLE `t_security_level`  (
-  `id` int NOT NULL AUTO_INCREMENT COMMENT '编号',
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '' COMMENT '安全等级',
-  `is_remind` int NOT NULL DEFAULT 0 COMMENT '是否提醒',
-  `remind_num` int NOT NULL DEFAULT 0 COMMENT '数量',
-  `create_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
-  `update_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '更新时间',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of t_security_level
--- ----------------------------
 
 SET FOREIGN_KEY_CHECKS = 1;
