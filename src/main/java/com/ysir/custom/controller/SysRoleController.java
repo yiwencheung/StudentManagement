@@ -23,7 +23,7 @@ import java.util.List;
  *
  */
 @RestController
-@RequestMapping("/system/role")
+@RequestMapping("/custom/role")
 public class SysRoleController extends BaseController {
 
     @Autowired

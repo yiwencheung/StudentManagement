@@ -110,7 +110,7 @@
           <el-col :span="12" v-if="form.menuType == 'C'">
             <el-form-item prop="component">
               <span slot="label">
-                <el-tooltip content="访问的组件路径，如：`system/user/index`，默认在`views`目录下" placement="top">
+                <el-tooltip content="访问的组件路径，如：`custom/user/index`，默认在`views`目录下" placement="top">
                   <i class="el-icon-question"></i>
                 </el-tooltip>
                 组件路径
@@ -122,7 +122,7 @@
             <el-form-item prop="perms">
               <el-input v-model="form.perms" placeholder="请输入权限标识" maxlength="100" />
               <span slot="label">
-                <el-tooltip content="控制器中定义的权限字符，如：@PreAuthorize(`@ss.hasPermi('system:user:list')`)" placement="top">
+                <el-tooltip content="控制器中定义的权限字符，如：@PreAuthorize(`@ss.hasPermi('custom:user:list')`)" placement="top">
                   <i class="el-icon-question"></i>
                 </el-tooltip>
                 权限字符
@@ -173,7 +173,7 @@
     delMenu,
     addMenu,
     updateMenu
-  } from "@/api/system/menu";
+  } from "@/api/custom/menu";
   import Treeselect from "@riophae/vue-treeselect";
   import "@riophae/vue-treeselect/dist/vue-treeselect.css";
   import IconSelect from "@/components/IconSelect";

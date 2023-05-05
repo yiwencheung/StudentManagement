@@ -14,7 +14,7 @@ import java.util.List;
  * 菜单信息
  */
 @RestController
-@RequestMapping("/system/menu")
+@RequestMapping("/custom/menu")
 public class SysMenuController extends BaseController {
 
     @Autowired

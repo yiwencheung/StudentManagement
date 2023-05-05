@@ -28,7 +28,7 @@ import java.util.stream.Collectors;
  * 用户信息
  */
 @RestController
-@RequestMapping("/system/user")
+@RequestMapping("/custom/user")
 public class SysUserController extends BaseController {
     @Autowired
     private ISysUserService userService;

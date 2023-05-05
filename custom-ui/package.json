@@ -29,7 +29,7 @@
     "element-ui",
     "boilerplate",
     "admin-template",
-    "management-system"
+    "management-custom"
   ],
   "repository": {
     "type": "git",

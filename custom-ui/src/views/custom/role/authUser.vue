@@ -33,7 +33,7 @@
           icon="el-icon-plus"
           size="mini"
           @click="openSelectUser"
-          v-hasPermi="['system:role:add']"
+          v-hasPermi="['custom:role:add']"
         >添加用户</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -44,7 +44,7 @@
           size="mini"
           :disabled="multiple"
           @click="cancelAuthUserAll"
-          v-hasPermi="['system:role:remove']"
+          v-hasPermi="['custom:role:remove']"
         >批量取消授权</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -86,7 +86,7 @@
             type="text"
             icon="el-icon-circle-close"
             @click="cancelAuthUser(scope.row)"
-            v-hasPermi="['system:role:remove']"
+            v-hasPermi="['custom:role:remove']"
           >取消授权</el-button>
         </template>
       </el-table-column>
@@ -104,7 +104,7 @@
 </template>
 
 <script>
-import { allocatedUserList, authUserCancel, authUserCancelAll } from "@/api/system/role";
+import { allocatedUserList, authUserCancel, authUserCancelAll } from "@/api/custom/role";
 import selectUser from "./selectUser";
 
 export default {
@@ -158,7 +158,7 @@ export default {
     },
     // 返回按钮
     handleClose() {
-      const obj = { path: "/system/role" };
+      const obj = { path: "/custom/role" };
       this.$tab.closeOpenPage(obj);
     },
     /** 搜索按钮操作 */

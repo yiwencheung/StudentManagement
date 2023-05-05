@@ -46,7 +46,7 @@
 </template>
 
 <script>
-import { getAuthRole, updateAuthRole } from "@/api/system/user";
+import { getAuthRole, updateAuthRole } from "@/api/custom/user";
 
 export default {
   name: "AuthRole",
@@ -109,7 +109,7 @@ export default {
     },
     /** 关闭按钮 */
     close() {
-      const obj = { path: "/system/user" };
+      const obj = { path: "/custom/user" };
       this.$tab.closeOpenPage(obj);
     },
   },
