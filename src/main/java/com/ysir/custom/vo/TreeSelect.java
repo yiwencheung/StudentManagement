@@ -1,7 +1,7 @@
 package com.ysir.custom.vo;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.ysir.custom.entity.SysMenu;
+import com.ysir.custom.entity.TMenu;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -32,7 +32,7 @@ public class TreeSelect implements Serializable {
     private List<TreeSelect> children;
 
 
-    public TreeSelect(SysMenu menu) {
+    public TreeSelect(TMenu menu) {
         this.id = menu.getMenuId();
         this.label = menu.getMenuName();
         this.children = menu.getChildren().stream().map(TreeSelect::new).collect(Collectors.toList());

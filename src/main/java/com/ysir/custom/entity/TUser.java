@@ -6,12 +6,11 @@ import cn.hutool.core.util.StrUtil;
 import com.ysir.custom.common.BaseEntity;
 import lombok.Data;
 
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
 @Data
-public class SysUser extends BaseEntity {
+public class TUser extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
     /**
@@ -78,7 +77,7 @@ public class SysUser extends BaseEntity {
     /**
      * 角色对象
      */
-    private List<SysRole> roles;
+    private List<TRole> roles;
 
     /**
      * 角色组
@@ -90,10 +89,10 @@ public class SysUser extends BaseEntity {
      */
     private Long roleId;
 
-    public SysUser(Long id) {
+    public TUser(Long id) {
         userId = id;
     }
-    public SysUser() {
+    public TUser() {
     }
     /**
      * 是否为管理员

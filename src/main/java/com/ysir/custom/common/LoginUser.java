@@ -1,6 +1,6 @@
 package com.ysir.custom.common;
 
-import com.ysir.custom.entity.SysUser;
+import com.ysir.custom.entity.TUser;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -63,7 +63,7 @@ public class LoginUser implements UserDetails {
     /**
      * 用户信息
      */
-    private SysUser user;
+    private TUser user;
 
     public Long getUserId() {
         return userId;
@@ -84,12 +84,12 @@ public class LoginUser implements UserDetails {
     public LoginUser() {
     }
 
-    public LoginUser(SysUser user, Set<String> permissions) {
+    public LoginUser(TUser user, Set<String> permissions) {
         this.user = user;
         this.permissions = permissions;
     }
 
-    public LoginUser(Long userId,  SysUser user, Set<String> permissions) {
+    public LoginUser(Long userId, TUser user, Set<String> permissions) {
         this.userId = userId;
         this.user = user;
         this.permissions = permissions;
@@ -199,11 +199,11 @@ public class LoginUser implements UserDetails {
         this.permissions = permissions;
     }
 
-    public SysUser getUser() {
+    public TUser getUser() {
         return user;
     }
 
-    public void setUser(SysUser user) {
+    public void setUser(TUser user) {
         this.user = user;
     }
 

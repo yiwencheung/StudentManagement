@@ -7,7 +7,7 @@ import lombok.Data;
  * 角色和菜单关联 sys_role_menu
  */
 @Data
-public class SysRoleMenu {
+public class TRoleMenu {
     /**
      * 角色ID
      */

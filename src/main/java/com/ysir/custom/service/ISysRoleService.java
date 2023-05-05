@@ -1,8 +1,8 @@
 package com.ysir.custom.service;
 
 
-import com.ysir.custom.entity.SysRole;
-import com.ysir.custom.entity.SysUserRole;
+import com.ysir.custom.entity.TRole;
+import com.ysir.custom.entity.TUserRole;
 
 import java.util.List;
 import java.util.Set;
@@ -18,7 +18,7 @@ public interface ISysRoleService {
      * @param role 角色信息
      * @return 角色数据集合信息
      */
-    public List<SysRole> selectRoleList(SysRole role);
+    public List<TRole> selectRoleList(TRole role);
 
     /**
      * 根据用户ID查询角色列表
@@ -26,7 +26,7 @@ public interface ISysRoleService {
      * @param userId 用户ID
      * @return 角色列表
      */
-    public List<SysRole> selectRolesByUserId(Long userId);
+    public List<TRole> selectRolesByUserId(Long userId);
 
     /**
      * 根据用户ID查询角色权限
@@ -41,7 +41,7 @@ public interface ISysRoleService {
      *
      * @return 角色列表
      */
-    public List<SysRole> selectRoleAll();
+    public List<TRole> selectRoleAll();
 
     /**
      * 根据用户ID获取角色选择框列表
@@ -57,7 +57,7 @@ public interface ISysRoleService {
      * @param roleId 角色ID
      * @return 角色对象信息
      */
-    public SysRole selectRoleById(Long roleId);
+    public TRole selectRoleById(Long roleId);
 
     /**
      * 校验角色名称是否唯一
@@ -65,7 +65,7 @@ public interface ISysRoleService {
      * @param role 角色信息
      * @return 结果
      */
-    public boolean checkRoleNameUnique(SysRole role);
+    public boolean checkRoleNameUnique(TRole role);
 
     /**
      * 校验角色权限是否唯一
@@ -73,7 +73,7 @@ public interface ISysRoleService {
      * @param role 角色信息
      * @return 结果
      */
-    public boolean checkRoleKeyUnique(SysRole role);
+    public boolean checkRoleKeyUnique(TRole role);
 
     /**
      * 通过角色ID查询角色使用数量
@@ -89,7 +89,7 @@ public interface ISysRoleService {
      * @param role 角色信息
      * @return 结果
      */
-    public int insertRole(SysRole role);
+    public int insertRole(TRole role);
 
     /**
      * 修改保存角色信息
@@ -97,7 +97,7 @@ public interface ISysRoleService {
      * @param role 角色信息
      * @return 结果
      */
-    public int updateRole(SysRole role);
+    public int updateRole(TRole role);
 
     /**
      * 修改角色状态
@@ -105,7 +105,7 @@ public interface ISysRoleService {
      * @param role 角色信息
      * @return 结果
      */
-    public int updateRoleStatus(SysRole role);
+    public int updateRoleStatus(TRole role);
 
     /**
      * 修改数据权限信息
@@ -113,7 +113,7 @@ public interface ISysRoleService {
      * @param role 角色信息
      * @return 结果
      */
-    public int authDataScope(SysRole role);
+    public int authDataScope(TRole role);
 
     /**
      * 通过角色ID删除角色
@@ -137,7 +137,7 @@ public interface ISysRoleService {
      * @param userRole 用户和角色关联信息
      * @return 结果
      */
-    public int deleteAuthUser(SysUserRole userRole);
+    public int deleteAuthUser(TUserRole userRole);
 
     /**
      * 批量取消授权用户角色

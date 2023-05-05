@@ -1,7 +1,7 @@
 package com.ysir.custom.mapper;
 
 
-import com.ysir.custom.entity.SysRole;
+import com.ysir.custom.entity.TRole;
 
 import java.util.List;
 
@@ -16,7 +16,7 @@ public interface SysRoleMapper {
      * @param role 角色信息
      * @return 角色数据集合信息
      */
-    public List<SysRole> selectRoleList(SysRole role);
+    public List<TRole> selectRoleList(TRole role);
 
     /**
      * 根据用户ID查询角色
@@ -24,14 +24,14 @@ public interface SysRoleMapper {
      * @param userId 用户ID
      * @return 角色列表
      */
-    public List<SysRole> selectRolePermissionByUserId(Long userId);
+    public List<TRole> selectRolePermissionByUserId(Long userId);
 
     /**
      * 查询所有角色
      *
      * @return 角色列表
      */
-    public List<SysRole> selectRoleAll();
+    public List<TRole> selectRoleAll();
 
     /**
      * 根据用户ID获取角色选择框列表
@@ -47,7 +47,7 @@ public interface SysRoleMapper {
      * @param roleId 角色ID
      * @return 角色对象信息
      */
-    public SysRole selectRoleById(Long roleId);
+    public TRole selectRoleById(Long roleId);
 
     /**
      * 根据用户ID查询角色
@@ -55,7 +55,7 @@ public interface SysRoleMapper {
      * @param userName 用户名
      * @return 角色列表
      */
-    public List<SysRole> selectRolesByUserName(String userName);
+    public List<TRole> selectRolesByUserName(String userName);
 
     /**
      * 校验角色名称是否唯一
@@ -63,7 +63,7 @@ public interface SysRoleMapper {
      * @param roleName 角色名称
      * @return 角色信息
      */
-    public SysRole checkRoleNameUnique(String roleName);
+    public TRole checkRoleNameUnique(String roleName);
 
     /**
      * 校验角色权限是否唯一
@@ -71,7 +71,7 @@ public interface SysRoleMapper {
      * @param roleKey 角色权限
      * @return 角色信息
      */
-    public SysRole checkRoleKeyUnique(String roleKey);
+    public TRole checkRoleKeyUnique(String roleKey);
 
     /**
      * 修改角色信息
@@ -79,7 +79,7 @@ public interface SysRoleMapper {
      * @param role 角色信息
      * @return 结果
      */
-    public int updateRole(SysRole role);
+    public int updateRole(TRole role);
 
     /**
      * 新增角色信息
@@ -87,7 +87,7 @@ public interface SysRoleMapper {
      * @param role 角色信息
      * @return 结果
      */
-    public int insertRole(SysRole role);
+    public int insertRole(TRole role);
 
     /**
      * 通过角色ID删除角色

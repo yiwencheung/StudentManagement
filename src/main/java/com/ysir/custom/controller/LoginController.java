@@ -5,14 +5,13 @@ import cn.hutool.core.util.StrUtil;
 import com.ysir.custom.common.AjaxResult;
 import com.ysir.custom.common.LoginBody;
 import com.ysir.custom.constant.GlobalConstants;
-import com.ysir.custom.entity.SysMenu;
-import com.ysir.custom.entity.SysUser;
+import com.ysir.custom.entity.TMenu;
+import com.ysir.custom.entity.TUser;
 import com.ysir.custom.service.ISysMenuService;
 import com.ysir.custom.service.impl.SysLoginService;
 import com.ysir.custom.service.impl.SysPermissionService;
 import com.ysir.custom.util.ServerConfigUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,7 +27,7 @@ import static com.ysir.custom.common.AjaxResult.success;
  * 登录验证
  */
 @RestController
-public class SysLoginController {
+public class LoginController {
 
     @Autowired
     private SysLoginService loginService;
@@ -68,7 +67,7 @@ public class SysLoginController {
      */
     @GetMapping("getInfo")
     public AjaxResult getInfo() {
-        SysUser user = ServerConfigUtil.getLoginUser().getUser();
+        TUser user = ServerConfigUtil.getLoginUser().getUser();
         // 角色集合
         Set<String> roles = permissionService.getRolePermission(user);
         // 权限集合
@@ -88,7 +87,7 @@ public class SysLoginController {
     @GetMapping("getRouters")
     public AjaxResult getRouters() {
         Long userId = ServerConfigUtil.getUserId();
-        List<SysMenu> menus = menuService.selectMenuTreeByUserId(userId);
+        List<TMenu> menus = menuService.selectMenuTreeByUserId(userId);
         return success(menuService.buildMenus(menus));
     }
 }

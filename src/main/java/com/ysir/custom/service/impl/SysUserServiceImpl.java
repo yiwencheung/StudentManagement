@@ -2,9 +2,9 @@ package com.ysir.custom.service.impl;
 
 
 import cn.hutool.core.util.ObjectUtil;
-import com.ysir.custom.entity.SysRole;
-import com.ysir.custom.entity.SysUser;
-import com.ysir.custom.entity.SysUserRole;
+import com.ysir.custom.entity.TRole;
+import com.ysir.custom.entity.TUser;
+import com.ysir.custom.entity.TUserRole;
 import com.ysir.custom.mapper.SysRoleMapper;
 import com.ysir.custom.mapper.SysUserMapper;
 import com.ysir.custom.mapper.SysUserRoleMapper;
@@ -42,7 +42,7 @@ public class SysUserServiceImpl implements ISysUserService {
      * @return 用户信息集合信息
      */
     @Override
-    public List<SysUser> selectUserList(SysUser user) {
+    public List<TUser> selectUserList(TUser user) {
         return userMapper.selectUserList(user);
     }
 
@@ -53,7 +53,7 @@ public class SysUserServiceImpl implements ISysUserService {
      * @return 用户信息集合信息
      */
     @Override
-    public List<SysUser> selectAllocatedList(SysUser user) {
+    public List<TUser> selectAllocatedList(TUser user) {
         return userMapper.selectAllocatedList(user);
     }
 
@@ -64,7 +64,7 @@ public class SysUserServiceImpl implements ISysUserService {
      * @return 用户信息集合信息
      */
     @Override
-    public List<SysUser> selectUnallocatedList(SysUser user) {
+    public List<TUser> selectUnallocatedList(TUser user) {
         return userMapper.selectUnallocatedList(user);
     }
 
@@ -75,7 +75,7 @@ public class SysUserServiceImpl implements ISysUserService {
      * @return 用户对象信息
      */
     @Override
-    public SysUser selectUserByUserName(String userName) {
+    public TUser selectUserByUserName(String userName) {
         return userMapper.selectUserByUserName(userName);
     }
 
@@ -86,7 +86,7 @@ public class SysUserServiceImpl implements ISysUserService {
      * @return 用户对象信息
      */
     @Override
-    public SysUser selectUserById(Long userId) {
+    public TUser selectUserById(Long userId) {
         return userMapper.selectUserById(userId);
     }
 
@@ -98,11 +98,11 @@ public class SysUserServiceImpl implements ISysUserService {
      */
     @Override
     public String selectUserRoleGroup(String userName) {
-        List<SysRole> list = roleMapper.selectRolesByUserName(userName);
+        List<TRole> list = roleMapper.selectRolesByUserName(userName);
         if (CollectionUtils.isEmpty(list)) {
             return "";
         }
-        return list.stream().map(SysRole::getRoleName).collect(Collectors.joining(","));
+        return list.stream().map(TRole::getRoleName).collect(Collectors.joining(","));
     }
 
 
@@ -115,7 +115,7 @@ public class SysUserServiceImpl implements ISysUserService {
      */
     @Override
     @Transactional
-    public int insertUser(SysUser user) {
+    public int insertUser(TUser user) {
         // 新增用户信息
         int rows = userMapper.insertUser(user);
         // 新增用户与角色管理
@@ -130,7 +130,7 @@ public class SysUserServiceImpl implements ISysUserService {
      * @return 结果
      */
     @Override
-    public boolean registerUser(SysUser user) {
+    public boolean registerUser(TUser user) {
         return userMapper.insertUser(user) > 0;
     }
 
@@ -142,7 +142,7 @@ public class SysUserServiceImpl implements ISysUserService {
      */
     @Override
     @Transactional
-    public int updateUser(SysUser user) {
+    public int updateUser(TUser user) {
         Long userId = user.getUserId();
         // 删除用户与角色关联
         userRoleMapper.deleteUserRoleByUserId(userId);
@@ -171,7 +171,7 @@ public class SysUserServiceImpl implements ISysUserService {
      * @return 结果
      */
     @Override
-    public int updateUserStatus(SysUser user) {
+    public int updateUserStatus(TUser user) {
         return userMapper.updateUser(user);
     }
 
@@ -182,7 +182,7 @@ public class SysUserServiceImpl implements ISysUserService {
      * @return 结果
      */
     @Override
-    public int updateUserProfile(SysUser user) {
+    public int updateUserProfile(TUser user) {
         return userMapper.updateUser(user);
     }
 
@@ -205,7 +205,7 @@ public class SysUserServiceImpl implements ISysUserService {
      * @return 结果
      */
     @Override
-    public int resetPwd(SysUser user) {
+    public int resetPwd(TUser user) {
         return userMapper.updateUser(user);
     }
 
@@ -226,7 +226,7 @@ public class SysUserServiceImpl implements ISysUserService {
      *
      * @param user 用户对象
      */
-    public void insertUserRole(SysUser user) {
+    public void insertUserRole(TUser user) {
         this.insertUserRole(user.getUserId(), user.getRoleIds());
     }
 
@@ -241,9 +241,9 @@ public class SysUserServiceImpl implements ISysUserService {
     public void insertUserRole(Long userId, Long[] roleIds) {
         if ( ObjectUtil.isNotEmpty(roleIds) && roleIds.length > 0) {
             // 新增用户与角色管理
-            List<SysUserRole> list = new ArrayList<SysUserRole>(roleIds.length);
+            List<TUserRole> list = new ArrayList<TUserRole>(roleIds.length);
             for (Long roleId : roleIds) {
-                SysUserRole ur = new SysUserRole();
+                TUserRole ur = new TUserRole();
                 ur.setUserId(userId);
                 ur.setRoleId(roleId);
                 list.add(ur);

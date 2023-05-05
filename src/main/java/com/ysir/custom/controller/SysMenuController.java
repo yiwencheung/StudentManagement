@@ -2,7 +2,7 @@ package com.ysir.custom.controller;
 
 
 import com.ysir.custom.common.AjaxResult;
-import com.ysir.custom.entity.SysMenu;
+import com.ysir.custom.entity.TMenu;
 import com.ysir.custom.service.ISysMenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -24,8 +24,8 @@ public class SysMenuController extends BaseController {
      * 获取菜单列表
      */
     @GetMapping("/list")
-    public AjaxResult list(SysMenu menu) {
-        List<SysMenu> menus = menuService.selectMenuList(menu, getUserId());
+    public AjaxResult list(TMenu menu) {
+        List<TMenu> menus = menuService.selectMenuList(menu, getUserId());
         return success(menus);
     }
 
@@ -41,8 +41,8 @@ public class SysMenuController extends BaseController {
      * 获取菜单下拉树列表
      */
     @GetMapping("/treeselect")
-    public AjaxResult treeselect(SysMenu menu) {
-        List<SysMenu> menus = menuService.selectMenuList(menu, getUserId());
+    public AjaxResult treeselect(TMenu menu) {
+        List<TMenu> menus = menuService.selectMenuList(menu, getUserId());
         return success(menuService.buildMenuTreeSelect(menus));
     }
 
@@ -51,7 +51,7 @@ public class SysMenuController extends BaseController {
      */
     @GetMapping(value = "/roleMenuTreeselect/{roleId}")
     public AjaxResult roleMenuTreeselect(@PathVariable("roleId") Long roleId) {
-        List<SysMenu> menus = menuService.selectMenuList(getUserId());
+        List<TMenu> menus = menuService.selectMenuList(getUserId());
         AjaxResult ajax = AjaxResult.success();
         ajax.put("checkedKeys", menuService.selectMenuListByRoleId(roleId));
         ajax.put("menus", menuService.buildMenuTreeSelect(menus));
@@ -62,7 +62,7 @@ public class SysMenuController extends BaseController {
      * 新增菜单
      */
     @PostMapping
-    public AjaxResult add(@Validated @RequestBody SysMenu menu) {
+    public AjaxResult add(@Validated @RequestBody TMenu menu) {
         menu.setCreateBy(getUsername());
         return toAjax(menuService.insertMenu(menu));
     }
@@ -71,7 +71,7 @@ public class SysMenuController extends BaseController {
      * 修改菜单
      */
     @PutMapping
-    public AjaxResult edit(@Validated @RequestBody SysMenu menu) {
+    public AjaxResult edit(@Validated @RequestBody TMenu menu) {
         menu.setUpdateBy(getUsername());
         return toAjax(menuService.updateMenu(menu));
     }

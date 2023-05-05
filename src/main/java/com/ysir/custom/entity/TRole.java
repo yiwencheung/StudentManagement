@@ -10,7 +10,7 @@ import java.util.Set;
  * 角色表 sys_role
  */
 @Data
-public class SysRole extends BaseEntity {
+public class TRole extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
     /**
@@ -44,11 +44,6 @@ public class SysRole extends BaseEntity {
     private boolean menuCheckStrictly;
 
     /**
-     * 部门树选择项是否关联显示（0：父子不互相关联显示 1：父子互相关联显示 ）
-     */
-    private boolean deptCheckStrictly;
-
-    /**
      * 角色状态（0正常 1停用）
      */
     private String status;
@@ -78,10 +73,10 @@ public class SysRole extends BaseEntity {
      */
     private Set<String> permissions;
 
-    public SysRole(long roleId){
+    public TRole(long roleId){
         this.roleId = roleId;
     }
-    public SysRole(){
+    public TRole(){
 
     }
 

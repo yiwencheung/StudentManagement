@@ -1,7 +1,7 @@
 package com.ysir.custom.service;
 
 
-import com.ysir.custom.entity.SysUser;
+import com.ysir.custom.entity.TUser;
 
 import java.util.List;
 
@@ -16,7 +16,7 @@ public interface ISysUserService {
      * @param user 用户信息
      * @return 用户信息集合信息
      */
-    public List<SysUser> selectUserList(SysUser user);
+    public List<TUser> selectUserList(TUser user);
 
     /**
      * 根据条件分页查询已分配用户角色列表
@@ -24,7 +24,7 @@ public interface ISysUserService {
      * @param user 用户信息
      * @return 用户信息集合信息
      */
-    public List<SysUser> selectAllocatedList(SysUser user);
+    public List<TUser> selectAllocatedList(TUser user);
 
     /**
      * 根据条件分页查询未分配用户角色列表
@@ -32,7 +32,7 @@ public interface ISysUserService {
      * @param user 用户信息
      * @return 用户信息集合信息
      */
-    public List<SysUser> selectUnallocatedList(SysUser user);
+    public List<TUser> selectUnallocatedList(TUser user);
 
     /**
      * 通过用户名查询用户
@@ -40,7 +40,7 @@ public interface ISysUserService {
      * @param userName 用户名
      * @return 用户对象信息
      */
-    public SysUser selectUserByUserName(String userName);
+    public TUser selectUserByUserName(String userName);
 
     /**
      * 通过用户ID查询用户
@@ -48,7 +48,7 @@ public interface ISysUserService {
      * @param userId 用户ID
      * @return 用户对象信息
      */
-    public SysUser selectUserById(Long userId);
+    public TUser selectUserById(Long userId);
 
     /**
      * 根据用户ID查询用户所属角色组
@@ -66,7 +66,7 @@ public interface ISysUserService {
      * @param user 用户信息
      * @return 结果
      */
-    public int insertUser(SysUser user);
+    public int insertUser(TUser user);
 
     /**
      * 注册用户信息
@@ -74,7 +74,7 @@ public interface ISysUserService {
      * @param user 用户信息
      * @return 结果
      */
-    public boolean registerUser(SysUser user);
+    public boolean registerUser(TUser user);
 
     /**
      * 修改用户信息
@@ -82,7 +82,7 @@ public interface ISysUserService {
      * @param user 用户信息
      * @return 结果
      */
-    public int updateUser(SysUser user);
+    public int updateUser(TUser user);
 
     /**
      * 用户授权角色
@@ -98,7 +98,7 @@ public interface ISysUserService {
      * @param user 用户信息
      * @return 结果
      */
-    public int updateUserStatus(SysUser user);
+    public int updateUserStatus(TUser user);
 
     /**
      * 修改用户基本信息
@@ -106,7 +106,7 @@ public interface ISysUserService {
      * @param user 用户信息
      * @return 结果
      */
-    public int updateUserProfile(SysUser user);
+    public int updateUserProfile(TUser user);
 
     /**
      * 修改用户头像
@@ -123,7 +123,7 @@ public interface ISysUserService {
      * @param user 用户信息
      * @return 结果
      */
-    public int resetPwd(SysUser user);
+    public int resetPwd(TUser user);
 
     /**
      * 重置用户密码

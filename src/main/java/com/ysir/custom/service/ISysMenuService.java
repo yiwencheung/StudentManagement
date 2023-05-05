@@ -1,7 +1,7 @@
 package com.ysir.custom.service;
 
 
-import com.ysir.custom.entity.SysMenu;
+import com.ysir.custom.entity.TMenu;
 import com.ysir.custom.vo.RouterVo;
 import com.ysir.custom.vo.TreeSelect;
 
@@ -18,7 +18,7 @@ public interface ISysMenuService {
      * @param userId 用户ID
      * @return 菜单列表
      */
-    public List<SysMenu> selectMenuList(Long userId);
+    public List<TMenu> selectMenuList(Long userId);
 
     /**
      * 根据用户查询系统菜单列表
@@ -27,7 +27,7 @@ public interface ISysMenuService {
      * @param userId 用户ID
      * @return 菜单列表
      */
-    public List<SysMenu> selectMenuList(SysMenu menu, Long userId);
+    public List<TMenu> selectMenuList(TMenu menu, Long userId);
 
     /**
      * 根据用户ID查询权限
@@ -51,7 +51,7 @@ public interface ISysMenuService {
      * @param userId 用户ID
      * @return 菜单列表
      */
-    public List<SysMenu> selectMenuTreeByUserId(Long userId);
+    public List<TMenu> selectMenuTreeByUserId(Long userId);
 
     /**
      * 根据角色ID查询菜单树信息
@@ -67,7 +67,7 @@ public interface ISysMenuService {
      * @param menus 菜单列表
      * @return 路由列表
      */
-    public List<RouterVo> buildMenus(List<SysMenu> menus);
+    public List<RouterVo> buildMenus(List<TMenu> menus);
 
     /**
      * 构建前端所需要树结构
@@ -75,7 +75,7 @@ public interface ISysMenuService {
      * @param menus 菜单列表
      * @return 树结构列表
      */
-    public List<SysMenu> buildMenuTree(List<SysMenu> menus);
+    public List<TMenu> buildMenuTree(List<TMenu> menus);
 
     /**
      * 构建前端所需要下拉树结构
@@ -83,7 +83,7 @@ public interface ISysMenuService {
      * @param menus 菜单列表
      * @return 下拉树结构列表
      */
-    public List<TreeSelect> buildMenuTreeSelect(List<SysMenu> menus);
+    public List<TreeSelect> buildMenuTreeSelect(List<TMenu> menus);
 
     /**
      * 根据菜单ID查询信息
@@ -91,7 +91,7 @@ public interface ISysMenuService {
      * @param menuId 菜单ID
      * @return 菜单信息
      */
-    public SysMenu selectMenuById(Long menuId);
+    public TMenu selectMenuById(Long menuId);
 
     /**
      * 是否存在菜单子节点
@@ -115,7 +115,7 @@ public interface ISysMenuService {
      * @param menu 菜单信息
      * @return 结果
      */
-    public int insertMenu(SysMenu menu);
+    public int insertMenu(TMenu menu);
 
     /**
      * 修改保存菜单信息
@@ -123,7 +123,7 @@ public interface ISysMenuService {
      * @param menu 菜单信息
      * @return 结果
      */
-    public int updateMenu(SysMenu menu);
+    public int updateMenu(TMenu menu);
 
     /**
      * 删除菜单管理信息
@@ -139,5 +139,5 @@ public interface ISysMenuService {
      * @param menu 菜单信息
      * @return 结果
      */
-    public boolean checkMenuNameUnique(SysMenu menu);
+    public boolean checkMenuNameUnique(TMenu menu);
 }

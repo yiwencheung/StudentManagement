@@ -2,21 +2,18 @@ package com.ysir.custom.controller;
 
 
 import cn.hutool.core.util.ObjectUtil;
-import cn.hutool.core.util.StrUtil;
 import com.ysir.custom.common.AjaxResult;
 import com.ysir.custom.common.LoginUser;
 import com.ysir.custom.common.PageDataInfo;
 import com.ysir.custom.config.CustomConfig;
-import com.ysir.custom.entity.SysRole;
-import com.ysir.custom.entity.SysUser;
+import com.ysir.custom.entity.TRole;
+import com.ysir.custom.entity.TUser;
 import com.ysir.custom.jwt.TokenService;
 import com.ysir.custom.service.ISysRoleService;
 import com.ysir.custom.service.ISysUserService;
 import com.ysir.custom.util.ServerConfigUtil;
 import com.ysir.custom.util.file.FileUploadUtils;
-import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.MimeTypeUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -44,9 +41,9 @@ public class SysUserController extends BaseController {
      * 获取用户列表
      */
     @GetMapping("/list")
-    public PageDataInfo list(SysUser user) {
+    public PageDataInfo list(TUser user) {
         startPage();
-        List<SysUser> list = userService.selectUserList(user);
+        List<TUser> list = userService.selectUserList(user);
         return getPageData(list);
     }
 
@@ -57,12 +54,12 @@ public class SysUserController extends BaseController {
     @GetMapping(value = {"/", "/{userId}"})
     public AjaxResult getInfo(@PathVariable(value = "userId", required = false) Long userId) {
         AjaxResult ajax = AjaxResult.success();
-        List<SysRole> roles = roleService.selectRoleAll();
+        List<TRole> roles = roleService.selectRoleAll();
         ajax.put("roles", roles);
         if (ObjectUtil.isNotNull(userId)) {
-            SysUser sysUser = userService.selectUserById(userId);
-            ajax.put(AjaxResult.DATA_TAG, sysUser);
-            ajax.put("roleIds", sysUser.getRoles().stream().map(SysRole::getRoleId).collect(Collectors.toList()));
+            TUser tUser = userService.selectUserById(userId);
+            ajax.put(AjaxResult.DATA_TAG, tUser);
+            ajax.put("roleIds", tUser.getRoles().stream().map(TRole::getRoleId).collect(Collectors.toList()));
         }
         return ajax;
     }
@@ -71,9 +68,9 @@ public class SysUserController extends BaseController {
      * 新增用户
      */
     @PostMapping
-    public AjaxResult add(@Validated @RequestBody SysUser user) {
-        SysUser sysUser = userService.selectUserByUserName(user.getUserName());
-        if (ObjectUtil.isNotEmpty(sysUser)) {
+    public AjaxResult add(@Validated @RequestBody TUser user) {
+        TUser tUser = userService.selectUserByUserName(user.getUserName());
+        if (ObjectUtil.isNotEmpty(tUser)) {
             return error("用户账号已存在，添加失败！");
         }
         user.setCreateBy(getUsername());
@@ -85,7 +82,7 @@ public class SysUserController extends BaseController {
      * 修改用户
      */
     @PutMapping
-    public AjaxResult edit(@Validated @RequestBody SysUser user) {
+    public AjaxResult edit(@Validated @RequestBody TUser user) {
         user.setUpdateBy(getUsername());
         return toAjax(userService.updateUser(user));
     }
@@ -102,7 +99,7 @@ public class SysUserController extends BaseController {
      * 重置密码
      */
     @PutMapping("/resetPwd")
-    public AjaxResult resetPwd(@RequestBody SysUser user) {
+    public AjaxResult resetPwd(@RequestBody TUser user) {
         user.setPassword(ServerConfigUtil.encryptPassword(user.getPassword()));
         user.setUpdateBy(getUsername());
         return toAjax(userService.resetPwd(user));
@@ -115,8 +112,8 @@ public class SysUserController extends BaseController {
     @GetMapping("/authRole/{userId}")
     public AjaxResult authRole(@PathVariable("userId") Long userId) {
         AjaxResult ajax = AjaxResult.success();
-        SysUser user = userService.selectUserById(userId);
-        List<SysRole> roles = roleService.selectRolesByUserId(userId);
+        TUser user = userService.selectUserById(userId);
+        List<TRole> roles = roleService.selectRolesByUserId(userId);
         ajax.put("user", user);
         ajax.put("roles", roles);
         return ajax;
@@ -137,7 +134,7 @@ public class SysUserController extends BaseController {
     @GetMapping("/profile")
     public AjaxResult profile() {
         LoginUser loginUser = getLoginUser();
-        SysUser user = loginUser.getUser();
+        TUser user = loginUser.getUser();
         AjaxResult ajax = AjaxResult.success(user);
         ajax.put("roleGroup", userService.selectUserRoleGroup(loginUser.getUsername()));
         return ajax;
@@ -147,21 +144,21 @@ public class SysUserController extends BaseController {
      * 修改用户
      */
     @PutMapping("/profile")
-    public AjaxResult updateProfile(@RequestBody SysUser user) {
+    public AjaxResult updateProfile(@RequestBody TUser user) {
         LoginUser loginUser = getLoginUser();
-        SysUser sysUser = loginUser.getUser();
-        user.setUserName(sysUser.getUserName());
+        TUser tUser = loginUser.getUser();
+        user.setUserName(tUser.getUserName());
 
 
-        user.setUserId(sysUser.getUserId());
+        user.setUserId(tUser.getUserId());
         user.setPassword(null);
         user.setAvatar(null);
         if (userService.updateUserProfile(user) > 0) {
             // 更新缓存用户信息
-            sysUser.setNickName(user.getNickName());
-            sysUser.setPhonenumber(user.getPhonenumber());
-            sysUser.setEmail(user.getEmail());
-            sysUser.setSex(user.getSex());
+            tUser.setNickName(user.getNickName());
+            tUser.setPhonenumber(user.getPhonenumber());
+            tUser.setEmail(user.getEmail());
+            tUser.setSex(user.getSex());
             tokenService.setLoginUser(loginUser);
             return success();
         }

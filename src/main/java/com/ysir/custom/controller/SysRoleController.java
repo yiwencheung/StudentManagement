@@ -5,9 +5,9 @@ import cn.hutool.core.util.ObjectUtil;
 import com.ysir.custom.common.AjaxResult;
 import com.ysir.custom.common.LoginUser;
 import com.ysir.custom.common.PageDataInfo;
-import com.ysir.custom.entity.SysRole;
-import com.ysir.custom.entity.SysUser;
-import com.ysir.custom.entity.SysUserRole;
+import com.ysir.custom.entity.TRole;
+import com.ysir.custom.entity.TUser;
+import com.ysir.custom.entity.TUserRole;
 import com.ysir.custom.jwt.TokenService;
 import com.ysir.custom.service.ISysRoleService;
 import com.ysir.custom.service.ISysUserService;
@@ -40,9 +40,9 @@ public class SysRoleController extends BaseController {
 
 
     @GetMapping("/list")
-    public PageDataInfo list(SysRole role) {
+    public PageDataInfo list(TRole role) {
         startPage();
-        List<SysRole> list = roleService.selectRoleList(role);
+        List<TRole> list = roleService.selectRoleList(role);
         return getPageData(list);
     }
 
@@ -60,7 +60,7 @@ public class SysRoleController extends BaseController {
      * 新增角色
      */
     @PostMapping
-    public AjaxResult add(@Validated @RequestBody SysRole role) {
+    public AjaxResult add(@Validated @RequestBody TRole role) {
         if (!roleService.checkRoleNameUnique(role)) {
             return error("新增角色'" + role.getRoleName() + "'失败，角色名称已存在");
         } else if (!roleService.checkRoleKeyUnique(role)) {
@@ -75,7 +75,7 @@ public class SysRoleController extends BaseController {
      * 修改保存角色
      */
     @PutMapping
-    public AjaxResult edit(@Validated @RequestBody SysRole role) {
+    public AjaxResult edit(@Validated @RequestBody TRole role) {
         if (!roleService.checkRoleNameUnique(role)) {
             return error("修改角色'" + role.getRoleName() + "'失败，角色名称已存在");
         } else if (!roleService.checkRoleKeyUnique(role)) {
@@ -100,7 +100,7 @@ public class SysRoleController extends BaseController {
      * 修改保存数据权限
      */
     @PutMapping("/dataScope")
-    public AjaxResult dataScope(@RequestBody SysRole role) {
+    public AjaxResult dataScope(@RequestBody TRole role) {
         return toAjax(roleService.authDataScope(role));
     }
 
@@ -108,7 +108,7 @@ public class SysRoleController extends BaseController {
      * 状态修改
      */
     @PutMapping("/changeStatus")
-    public AjaxResult changeStatus(@RequestBody SysRole role) {
+    public AjaxResult changeStatus(@RequestBody TRole role) {
         role.setUpdateBy(getUsername());
         return toAjax(roleService.updateRoleStatus(role));
     }
@@ -133,9 +133,9 @@ public class SysRoleController extends BaseController {
      * 查询已分配用户角色列表
      */
     @GetMapping("/authUser/allocatedList")
-    public PageDataInfo allocatedList(SysUser user) {
+    public PageDataInfo allocatedList(TUser user) {
         startPage();
-        List<SysUser> list = userService.selectAllocatedList(user);
+        List<TUser> list = userService.selectAllocatedList(user);
         return getPageData(list);
     }
 
@@ -143,9 +143,9 @@ public class SysRoleController extends BaseController {
      * 查询未分配用户角色列表
      */
     @GetMapping("/authUser/unallocatedList")
-    public PageDataInfo unallocatedList(SysUser user) {
+    public PageDataInfo unallocatedList(TUser user) {
         startPage();
-        List<SysUser> list = userService.selectUnallocatedList(user);
+        List<TUser> list = userService.selectUnallocatedList(user);
         return getPageData(list);
     }
 
@@ -153,7 +153,7 @@ public class SysRoleController extends BaseController {
      * 取消授权用户
      */
     @PutMapping("/authUser/cancel")
-    public AjaxResult cancelAuthUser(@RequestBody SysUserRole userRole) {
+    public AjaxResult cancelAuthUser(@RequestBody TUserRole userRole) {
         return toAjax(roleService.deleteAuthUser(userRole));
     }
 

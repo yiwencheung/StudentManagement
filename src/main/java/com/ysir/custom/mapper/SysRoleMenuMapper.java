@@ -1,7 +1,7 @@
 package com.ysir.custom.mapper;
 
 
-import com.ysir.custom.entity.SysRoleMenu;
+import com.ysir.custom.entity.TRoleMenu;
 
 import java.util.List;
 
@@ -40,5 +40,5 @@ public interface SysRoleMenuMapper {
      * @param roleMenuList 角色菜单列表
      * @return 结果
      */
-    public int batchRoleMenu(List<SysRoleMenu> roleMenuList);
+    public int batchRoleMenu(List<TRoleMenu> roleMenuList);
 }

@@ -168,6 +168,15 @@
             >{{dict.label}}</el-radio>
           </el-radio-group>
         </el-form-item>
+        <el-form-item label="是否默认角色">
+          <el-radio-group v-model="form.isDefault">
+            <el-radio
+              v-for="dict in sys_is_default"
+              :key="dict.value"
+              :label="dict.value"
+            >{{dict.label}}</el-radio>
+          </el-radio-group>
+        </el-form-item>
         <el-form-item label="菜单权限">
           <el-checkbox v-model="menuExpand" @change="handleCheckedTreeExpand($event, 'menu')">展开/折叠</el-checkbox>
           <el-checkbox v-model="menuNodeAll" @change="handleCheckedTreeNodeAll($event, 'menu')">全选/全不选</el-checkbox>
@@ -207,6 +216,10 @@ export default {
       sys_normal_disable:[
         {"label":"正常","value":"0"},
         {"label":"停用","value":"1"}
+      ],
+      sys_is_default:[
+        {"label":"否","value":"0"},
+        {"label":"是","value":"1"}
       ],
       // 遮罩层
       loading: true,
@@ -314,7 +327,7 @@ export default {
       this.open = false;
       this.reset();
     },
-  
+
     // 表单重置
     reset() {
       if (this.$refs.menu != undefined) {

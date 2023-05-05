@@ -6,13 +6,11 @@ import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.ysir.custom.common.LoginBody;
 import com.ysir.custom.common.LoginUser;
-import com.ysir.custom.entity.SysRole;
-import com.ysir.custom.entity.SysRoleMenu;
-import com.ysir.custom.entity.SysUser;
-import com.ysir.custom.entity.SysUserRole;
+import com.ysir.custom.entity.TRole;
+import com.ysir.custom.entity.TUser;
+import com.ysir.custom.entity.TUserRole;
 import com.ysir.custom.jwt.TokenService;
 import com.ysir.custom.mapper.SysRoleMapper;
-import com.ysir.custom.mapper.SysRoleMenuMapper;
 import com.ysir.custom.mapper.SysUserMapper;
 import com.ysir.custom.mapper.SysUserRoleMapper;
 import com.ysir.custom.util.ServerConfigUtil;
@@ -21,11 +19,8 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
-import sun.misc.MessageUtils;
 
 import javax.annotation.Resource;
-import javax.management.relation.Role;
 import java.util.Arrays;
 import java.util.List;
 
@@ -79,8 +74,8 @@ public class SysLoginService {
      */
     public String register(LoginBody registerBody) {
         String msg = "", username = registerBody.getUsername(), password = registerBody.getPassword();
-        SysUser sysUser = new SysUser();
-        sysUser.setUserName(username);
+        TUser tUser = new TUser();
+        tUser.setUserName(username);
 
         if (StrUtil.isBlank(username)) {
             msg = "用户名不能为空";
@@ -89,21 +84,21 @@ public class SysLoginService {
         } else if (ObjectUtil.isNotEmpty(sysUserMapper.selectUserByUserName(username))) {
             msg = "保存用户'" + username + "'失败，注册账号已存在";
         }
-        sysUser.setNickName(username);
-        sysUser.setPassword(ServerConfigUtil.encryptPassword(password));
-        int res = sysUserMapper.insertUser(sysUser);
+        tUser.setNickName(username);
+        tUser.setPassword(ServerConfigUtil.encryptPassword(password));
+        int res = sysUserMapper.insertUser(tUser);
         if (res <= 0) {
             msg = "注册失败,请联系系统管理人员";
         }
         //设置默认角色
-        SysRole sysRole = new SysRole();
-        sysRole.setDefault(true);
-        List<SysRole> sysRoles = sysRoleMapper.selectRoleList(sysRole);
-        if (CollUtil.isNotEmpty(sysRoles)){
-            SysUserRole sysUserRole = new SysUserRole();
-            sysUserRole.setRoleId(sysRoles.get(0).getRoleId());
-            sysUserRole.setUserId(sysUser.getUserId());
-            sysUserRoleMapper.batchUserRole(Arrays.asList(sysUserRole));
+        TRole tRole = new TRole();
+        tRole.setDefault(true);
+        List<TRole> tRoles = sysRoleMapper.selectRoleList(tRole);
+        if (CollUtil.isNotEmpty(tRoles)){
+            TUserRole tUserRole = new TUserRole();
+            tUserRole.setRoleId(tRoles.get(0).getRoleId());
+            tUserRole.setUserId(tUser.getUserId());
+            sysUserRoleMapper.batchUserRole(Arrays.asList(tUserRole));
         }
         return msg;
     }

@@ -1,6 +1,6 @@
 package com.ysir.custom.mapper;
 
-import com.ysir.custom.entity.SysMenu;
+import com.ysir.custom.entity.TMenu;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -15,7 +15,7 @@ public interface SysMenuMapper {
      * @param menu 菜单信息
      * @return 菜单列表
      */
-    public List<SysMenu> selectMenuList(SysMenu menu);
+    public List<TMenu> selectMenuList(TMenu menu);
 
     /**
      * 根据用户所有权限
@@ -30,7 +30,7 @@ public interface SysMenuMapper {
      * @param menu 菜单信息
      * @return 菜单列表
      */
-    public List<SysMenu> selectMenuListByUserId(SysMenu menu);
+    public List<TMenu> selectMenuListByUserId(TMenu menu);
 
     /**
      * 根据角色ID查询权限
@@ -53,7 +53,7 @@ public interface SysMenuMapper {
      *
      * @return 菜单列表
      */
-    public List<SysMenu> selectMenuTreeAll();
+    public List<TMenu> selectMenuTreeAll();
 
     /**
      * 根据用户ID查询菜单
@@ -61,7 +61,7 @@ public interface SysMenuMapper {
      * @param userId 用户ID
      * @return 菜单列表
      */
-    public List<SysMenu> selectMenuTreeByUserId(Long userId);
+    public List<TMenu> selectMenuTreeByUserId(Long userId);
 
     /**
      * 根据角色ID查询菜单树信息
@@ -78,7 +78,7 @@ public interface SysMenuMapper {
      * @param menuId 菜单ID
      * @return 菜单信息
      */
-    public SysMenu selectMenuById(Long menuId);
+    public TMenu selectMenuById(Long menuId);
 
     /**
      * 是否存在菜单子节点
@@ -94,7 +94,7 @@ public interface SysMenuMapper {
      * @param menu 菜单信息
      * @return 结果
      */
-    public int insertMenu(SysMenu menu);
+    public int insertMenu(TMenu menu);
 
     /**
      * 修改菜单信息
@@ -102,7 +102,7 @@ public interface SysMenuMapper {
      * @param menu 菜单信息
      * @return 结果
      */
-    public int updateMenu(SysMenu menu);
+    public int updateMenu(TMenu menu);
 
     /**
      * 删除菜单管理信息
@@ -119,5 +119,5 @@ public interface SysMenuMapper {
      * @param parentId 父菜单ID
      * @return 结果
      */
-    public SysMenu checkMenuNameUnique(@Param("menuName") String menuName, @Param("parentId") Long parentId);
+    public TMenu checkMenuNameUnique(@Param("menuName") String menuName, @Param("parentId") Long parentId);
 }
