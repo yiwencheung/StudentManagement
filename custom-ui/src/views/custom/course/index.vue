@@ -101,7 +101,7 @@
         </template>
       </el-table-column>
     </el-table>
-    
+
     <pagination
       v-show="total>0"
       :total="total"
@@ -119,8 +119,8 @@
           <el-input v-model="form.name" placeholder="请输入课程名称" />
         </el-form-item>
 <el-form-item label="课程性质" prop="typeName">
-<el-select v-model="form.typeName" placeholder="请选择课程性质">
-    <el-option
+<el-select @change="selectCourseTypeChange" v-model="form.typeName" placeholder="请选择课程性质">
+    <el-option  
             v-for="(item,index) in typeNameList"
             :label="item.name"
             :value="index" >
