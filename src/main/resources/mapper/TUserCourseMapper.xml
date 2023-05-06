@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ysir.custom.mapper.TUserCourseMapper">
+    
+    <resultMap type="TUserCourse" id="TUserCourseResult">
+        <result property="id"    column="id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="userName"    column="user_name"    />
+        <result property="teacherCourseId"    column="teacher_course_id"    />
+        <result property="courseId"    column="course_id"    />
+        <result property="courseName"    column="course_name"    />
+        <result property="teacherId"    column="teacher_id"    />
+        <result property="teacherName"    column="teacher_name"    />
+        <result property="credit"    column="credit"    />
+        <result property="score"    column="score"    />
+        <result property="examStatus"    column="exam_status"    />
+        <result property="payStatus"    column="pay_status"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectTUserCourseVo">
+        select id, user_id, user_name, teacher_course_id, course_id, course_name, teacher_id, teacher_name, credit, score, exam_status, pay_status, create_time, update_time from t_user_course
+    </sql>
+
+    <select id="selectTUserCourseList" parameterType="TUserCourse" resultMap="TUserCourseResult">
+        <include refid="selectTUserCourseVo"/>
+        <where>  
+            <if test="userName != null  and userName != ''"> and user_name like concat('%', #{userName}, '%')</if>
+            <if test="courseName != null  and courseName != ''"> and course_name like concat('%', #{courseName}, '%')</if>
+            <if test="params.beginScore != null and params.beginScore != '' and params.endScore != null and params.endScore != ''"> and score between #{params.beginScore} and #{params.endScore}</if>
+            <if test="examStatus != null "> and exam_status = #{examStatus}</if>
+            <if test="payStatus != null "> and pay_status = #{payStatus}</if>
+        </where>
+    </select>
+    
+    <select id="selectTUserCourseById" parameterType="Long" resultMap="TUserCourseResult">
+        <include refid="selectTUserCourseVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertTUserCourse" parameterType="TUserCourse" useGeneratedKeys="true" keyProperty="id">
+        insert into t_user_course
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">user_id,</if>
+            <if test="userName != null and userName != ''">user_name,</if>
+            <if test="teacherCourseId != null">teacher_course_id,</if>
+            <if test="courseId != null">course_id,</if>
+            <if test="courseName != null and courseName != ''">course_name,</if>
+            <if test="teacherId != null">teacher_id,</if>
+            <if test="teacherName != null and teacherName != ''">teacher_name,</if>
+            <if test="credit != null">credit,</if>
+            <if test="score != null">score,</if>
+            <if test="examStatus != null">exam_status,</if>
+            <if test="payStatus != null">pay_status,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">#{userId},</if>
+            <if test="userName != null and userName != ''">#{userName},</if>
+            <if test="teacherCourseId != null">#{teacherCourseId},</if>
+            <if test="courseId != null">#{courseId},</if>
+            <if test="courseName != null and courseName != ''">#{courseName},</if>
+            <if test="teacherId != null">#{teacherId},</if>
+            <if test="teacherName != null and teacherName != ''">#{teacherName},</if>
+            <if test="credit != null">#{credit},</if>
+            <if test="score != null">#{score},</if>
+            <if test="examStatus != null">#{examStatus},</if>
+            <if test="payStatus != null">#{payStatus},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTUserCourse" parameterType="TUserCourse">
+        update t_user_course
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="userName != null and userName != ''">user_name = #{userName},</if>
+            <if test="teacherCourseId != null">teacher_course_id = #{teacherCourseId},</if>
+            <if test="courseId != null">course_id = #{courseId},</if>
+            <if test="courseName != null and courseName != ''">course_name = #{courseName},</if>
+            <if test="teacherId != null">teacher_id = #{teacherId},</if>
+            <if test="teacherName != null and teacherName != ''">teacher_name = #{teacherName},</if>
+            <if test="credit != null">credit = #{credit},</if>
+            <if test="score != null">score = #{score},</if>
+            <if test="examStatus != null">exam_status = #{examStatus},</if>
+            <if test="payStatus != null">pay_status = #{payStatus},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTUserCourseById" parameterType="Long">
+        delete from t_user_course where id = #{id}
+    </delete>
+
+    <delete id="deleteTUserCourseByIds" parameterType="String">
+        delete from t_user_course where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

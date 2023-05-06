@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ysir.custom.mapper.TCourseTypeMapper">
+    
+    <resultMap type="TCourseType" id="TCourseTypeResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectTCourseTypeVo">
+        select id, name, create_time, update_time from t_course_type
+    </sql>
+
+    <select id="selectTCourseTypeList" parameterType="TCourseType" resultMap="TCourseTypeResult">
+        <include refid="selectTCourseTypeVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectTCourseTypeById" parameterType="Long" resultMap="TCourseTypeResult">
+        <include refid="selectTCourseTypeVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertTCourseType" parameterType="TCourseType" useGeneratedKeys="true" keyProperty="id">
+        insert into t_course_type
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null and name != ''">name,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null and name != ''">#{name},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTCourseType" parameterType="TCourseType">
+        update t_course_type
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTCourseTypeById" parameterType="Long">
+        delete from t_course_type where id = #{id}
+    </delete>
+
+    <delete id="deleteTCourseTypeByIds" parameterType="String">
+        delete from t_course_type where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

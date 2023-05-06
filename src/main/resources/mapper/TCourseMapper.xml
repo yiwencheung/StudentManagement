@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ysir.custom.mapper.TCourseMapper">
+    
+    <resultMap type="TCourse" id="TCourseResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="typeId"    column="type_id"    />
+        <result property="typeName"    column="type_name"    />
+        <result property="totalPeriod"    column="total_period"    />
+        <result property="teachingPeriod"    column="teaching_period"    />
+        <result property="computerPeriod"    column="computer_period"    />
+        <result property="experimentalPeriod"    column="experimental_period"    />
+        <result property="credit"    column="credit"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectTCourseVo">
+        select id, name, type_id, type_name, total_period, teaching_period, computer_period, experimental_period, credit, create_time, update_time from t_course
+    </sql>
+
+    <select id="selectTCourseList" parameterType="TCourse" resultMap="TCourseResult">
+        <include refid="selectTCourseVo"/>
+        <where>  
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="typeName != null  and typeName != ''"> and type_name like concat('%', #{typeName}, '%')</if>
+            <if test="credit != null "> and credit = #{credit}</if>
+        </where>
+    </select>
+    
+    <select id="selectTCourseById" parameterType="Long" resultMap="TCourseResult">
+        <include refid="selectTCourseVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertTCourse" parameterType="TCourse" useGeneratedKeys="true" keyProperty="id">
+        insert into t_course
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null and name != ''">name,</if>
+            <if test="typeId != null">type_id,</if>
+            <if test="typeName != null and typeName != ''">type_name,</if>
+            <if test="totalPeriod != null">total_period,</if>
+            <if test="teachingPeriod != null">teaching_period,</if>
+            <if test="computerPeriod != null">computer_period,</if>
+            <if test="experimentalPeriod != null">experimental_period,</if>
+            <if test="credit != null">credit,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null and name != ''">#{name},</if>
+            <if test="typeId != null">#{typeId},</if>
+            <if test="typeName != null and typeName != ''">#{typeName},</if>
+            <if test="totalPeriod != null">#{totalPeriod},</if>
+            <if test="teachingPeriod != null">#{teachingPeriod},</if>
+            <if test="computerPeriod != null">#{computerPeriod},</if>
+            <if test="experimentalPeriod != null">#{experimentalPeriod},</if>
+            <if test="credit != null">#{credit},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTCourse" parameterType="TCourse">
+        update t_course
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="typeId != null">type_id = #{typeId},</if>
+            <if test="typeName != null and typeName != ''">type_name = #{typeName},</if>
+            <if test="totalPeriod != null">total_period = #{totalPeriod},</if>
+            <if test="teachingPeriod != null">teaching_period = #{teachingPeriod},</if>
+            <if test="computerPeriod != null">computer_period = #{computerPeriod},</if>
+            <if test="experimentalPeriod != null">experimental_period = #{experimentalPeriod},</if>
+            <if test="credit != null">credit = #{credit},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTCourseById" parameterType="Long">
+        delete from t_course where id = #{id}
+    </delete>
+
+    <delete id="deleteTCourseByIds" parameterType="String">
+        delete from t_course where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

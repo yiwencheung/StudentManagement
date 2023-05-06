@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ysir.custom.mapper.TTeacherCourseMapper">
+    
+    <resultMap type="TTeacherCourse" id="TTeacherCourseResult">
+        <result property="id"    column="id"    />
+        <result property="teacherId"    column="teacher_id"    />
+        <result property="teacherName"    column="teacher_name"    />
+        <result property="courseId"    column="course_id"    />
+        <result property="courseName"    column="course_name"    />
+        <result property="studentNum"    column="student_num"    />
+        <result property="selectedNum"    column="selected_num"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectTTeacherCourseVo">
+        select id, teacher_id, teacher_name, course_id, course_name, student_num, selected_num, create_time, update_time from t_teacher_course
+    </sql>
+
+    <select id="selectTTeacherCourseList" parameterType="TTeacherCourse" resultMap="TTeacherCourseResult">
+        <include refid="selectTTeacherCourseVo"/>
+        <where>  
+            <if test="teacherName != null  and teacherName != ''"> and teacher_name like concat('%', #{teacherName}, '%')</if>
+            <if test="courseName != null  and courseName != ''"> and course_name like concat('%', #{courseName}, '%')</if>
+            <if test="selectedNum != null "> and selected_num &gt; #{selectedNum}</if>
+        </where>
+    </select>
+    
+    <select id="selectTTeacherCourseById" parameterType="Long" resultMap="TTeacherCourseResult">
+        <include refid="selectTTeacherCourseVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertTTeacherCourse" parameterType="TTeacherCourse" useGeneratedKeys="true" keyProperty="id">
+        insert into t_teacher_course
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="teacherId != null">teacher_id,</if>
+            <if test="teacherName != null and teacherName != ''">teacher_name,</if>
+            <if test="courseId != null">course_id,</if>
+            <if test="courseName != null and courseName != ''">course_name,</if>
+            <if test="studentNum != null">student_num,</if>
+            <if test="selectedNum != null">selected_num,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="teacherId != null">#{teacherId},</if>
+            <if test="teacherName != null and teacherName != ''">#{teacherName},</if>
+            <if test="courseId != null">#{courseId},</if>
+            <if test="courseName != null and courseName != ''">#{courseName},</if>
+            <if test="studentNum != null">#{studentNum},</if>
+            <if test="selectedNum != null">#{selectedNum},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTTeacherCourse" parameterType="TTeacherCourse">
+        update t_teacher_course
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="teacherId != null">teacher_id = #{teacherId},</if>
+            <if test="teacherName != null and teacherName != ''">teacher_name = #{teacherName},</if>
+            <if test="courseId != null">course_id = #{courseId},</if>
+            <if test="courseName != null and courseName != ''">course_name = #{courseName},</if>
+            <if test="studentNum != null">student_num = #{studentNum},</if>
+            <if test="selectedNum != null">selected_num = #{selectedNum},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTTeacherCourseById" parameterType="Long">
+        delete from t_teacher_course where id = #{id}
+    </delete>
+
+    <delete id="deleteTTeacherCourseByIds" parameterType="String">
+        delete from t_teacher_course where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
