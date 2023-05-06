@@ -220,7 +220,7 @@ export default {
   methods: {
      /**获取教师名称下拉列表 **/
      getUserList(){
-         listUser({}).then(response => {
+         listUser({roleId:2}).then(response => {
              this.teacherNameList = response.rows;
          });
      },
