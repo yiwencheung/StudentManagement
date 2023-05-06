@@ -18,12 +18,15 @@ public class TUser extends BaseEntity {
      */
     private Long userId;
 
+    private Long id;
+
 
     /**
      * 用户账号
      */
     private String userName;
 
+    private String name;
     /**
      * 用户昵称
      */
@@ -103,5 +106,11 @@ public class TUser extends BaseEntity {
         return (ObjectUtil.isNotEmpty(userId) && userId == 1 || (StrUtil.isNotBlank(userName) && userName.equals("admin")) );
     }
 
+    public Long getId() {
+        return userId;
+    }
 
+    public String getName() {
+        return nickName;
+    }
 }
