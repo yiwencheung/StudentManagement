@@ -55,6 +55,15 @@ public class TUserCourseController extends BaseController {
         return toAjax(tUserCourseService.insertTUserCourse(tUserCourse));
     }
 
+    @PostMapping("/batch")
+    public AjaxResult addBatch(@RequestBody List<Long> ids) {
+        return tUserCourseService.addBatch(ids);
+    }
+
+    @PostMapping("/paySuccess")
+    public AjaxResult paySuccess(@RequestBody Long[] ids) {
+        return tUserCourseService.paySuccess(ids);
+    }
     /**
      * 修改学生选课管理
      */
@@ -68,6 +77,6 @@ public class TUserCourseController extends BaseController {
      */
 	@DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids) {
-        return toAjax(tUserCourseService.deleteTUserCourseByIds(ids));
+        return tUserCourseService.deleteTUserCourseByIds(ids);
     }
 }

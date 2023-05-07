@@ -1,7 +1,11 @@
 package com.ysir.custom.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.ysir.custom.common.BaseEntity;
 import lombok.Data;
+
+import java.math.BigDecimal;
+import java.util.Date;
 
 /**
  * 教师课程管理对象 t_teacher_course
@@ -32,5 +36,13 @@ public class TTeacherCourse extends BaseEntity{
 
     /** 已选择学生数 */
     private Long selectedNum;
+
+    private BigDecimal credit;
+
+    private BigDecimal price;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date startTime;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date endTime;
 
 }

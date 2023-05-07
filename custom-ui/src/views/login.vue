@@ -29,20 +29,11 @@
           :loading="loading"
           size="medium"
           type="primary"
-          style="width:30%;;margin-left:50px"
+          style="width:80%;margin-left:20px"
           @click.native.prevent="handleLogin"
         >
           <span v-if="!loading">登 录</span>
           <span v-else>登 录 中...</span>
-        </el-button>
-        <el-button
-          :loading="loading"
-          type="info"
-          size="medium"
-          style="width:30%;;"
-          @click.native.prevent="handleLink"
-        >
-          <span>注 册</span>
         </el-button>
         <div style="float: right;" v-if="register">
           <router-link class="link-type" :to="'/register'">立即注册</router-link>

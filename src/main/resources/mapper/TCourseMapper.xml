@@ -14,12 +14,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="computerPeriod"    column="computer_period"    />
         <result property="experimentalPeriod"    column="experimental_period"    />
         <result property="credit"    column="credit"    />
+        <result property="price"    column="price"    />
         <result property="createTime"    column="create_time"    />
         <result property="updateTime"    column="update_time"    />
+        <result property="startTime"    column="start_time"    />
+        <result property="endTime"    column="end_time"    />
     </resultMap>
 
     <sql id="selectTCourseVo">
-        select id, name, type_id, type_name, total_period, teaching_period, computer_period, experimental_period, credit, create_time, update_time from t_course
+        select id,start_time,end_time, name, type_id,price, type_name, total_period, teaching_period, computer_period, experimental_period, credit, create_time, update_time from t_course
     </sql>
 
     <select id="selectTCourseList" parameterType="TCourse" resultMap="TCourseResult">
@@ -49,6 +52,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="credit != null">credit,</if>
             <if test="createTime != null">create_time,</if>
             <if test="updateTime != null">update_time,</if>
+            <if test="startTime != null">start_time,</if>
+            <if test="endTime != null">end_time,</if>
+            <if test="price != null">price,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="name != null and name != ''">#{name},</if>
@@ -61,6 +67,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="credit != null">#{credit},</if>
             <if test="createTime != null">#{createTime},</if>
             <if test="updateTime != null">#{updateTime},</if>
+            <if test="startTime != null">#{startTime},</if>
+            <if test="endTime != null">#{endTime},</if>
+            <if test="price != null">#{price},</if>
          </trim>
     </insert>
 
@@ -77,6 +86,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="credit != null">credit = #{credit},</if>
             <if test="createTime != null">create_time = #{createTime},</if>
             <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="startTime != null">start_time = #{startTime},</if>
+            <if test="endTime != null">end_time = #{endTime},</if>
+            <if test="price != null">price = #{price},</if>
         </trim>
         where id = #{id}
     </update>

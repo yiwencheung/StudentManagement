@@ -17,7 +17,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectTTeacherCourseVo">
-        select id, teacher_id, teacher_name, course_id, course_name, student_num, selected_num, create_time, update_time from t_teacher_course
+        select ttc.*, tc.credit,tc.price,tc.start_time,tc.end_time
+        from t_teacher_course ttc
+        left join t_course tc on ttc.course_id = tc.id
     </sql>
 
     <select id="selectTTeacherCourseList" parameterType="TTeacherCourse" resultMap="TTeacherCourseResult">
@@ -33,7 +35,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectTTeacherCourseVo"/>
         where id = #{id}
     </select>
-        
+    <select id="selectTTeacherCourseByIds" resultType="com.ysir.custom.entity.TTeacherCourse"
+            parameterType="java.util.List">
+        <include refid="selectTTeacherCourseVo"/>
+        where ttc.id in
+        <foreach item="id" collection="list" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+
     <insert id="insertTTeacherCourse" parameterType="TTeacherCourse" useGeneratedKeys="true" keyProperty="id">
         insert into t_teacher_course
         <trim prefix="(" suffix=")" suffixOverrides=",">

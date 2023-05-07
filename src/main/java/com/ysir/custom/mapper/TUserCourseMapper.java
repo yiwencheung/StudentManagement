@@ -56,4 +56,6 @@ public interface TUserCourseMapper {
      * @return 影响行数量
      */
      int deleteTUserCourseByIds(Long[] ids);
+
+    List<TUserCourse> selectTUserCourseByIds(Long[] ids);
 }

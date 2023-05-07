@@ -56,4 +56,6 @@ public interface TTeacherCourseMapper {
      * @return 影响行数量
      */
      int deleteTTeacherCourseByIds(Long[] ids);
+
+    List<TTeacherCourse> selectTTeacherCourseByIds(List<Long> ids);
 }

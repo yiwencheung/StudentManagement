@@ -25,6 +25,21 @@ export function addStudentCourse(data) {
     data: data
   })
 }
+// 新增学生选课管理
+export function addBatch(data) {
+  return request({
+    url: '/custom/studentCourse/batch',
+    method: 'post',
+    data: data
+  })
+}
+export function paySuccess(data) {
+  return request({
+    url: '/custom/studentCourse/paySuccess',
+    method: 'post',
+    data: data
+  })
+}
 
 // 修改学生选课管理
 export function updateStudentCourse(data) {

@@ -86,20 +86,39 @@
     <!-- 添加或修改学生选课管理对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+        <el-form-item label="学生" prop="userName">
+          <el-select :disabled="isEdit"  @change="selectUserNameChange" v-model="form.userName" placeholder="请选择学生名称">
+            <el-option v-for="(item,index) in userNameList" :label="item.name" :value="index">
+            </el-option>
+          </el-select>
+        </el-form-item>
         <el-form-item label="课程名称" prop="courseName">
-          <el-select @change="selectTeacherCourseChange" v-model="form.courseName" placeholder="请选择课程名称">
-            <el-option v-for="(item,index) in courseNameList" :label="item.courseName + ' - ' + item.teacherName" :value="index">
+          <el-select :disabled="isEdit" @change="selectTeacherCourseChange" v-model="form.courseName" placeholder="请选择课程名称">
+            <el-option v-for="(item,index) in courseNameList" :label="item.courseName + ' - ' + item.teacherName"
+              :value="index">
             </el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="教师名称" prop="teacherName">
-          <el-input v-model="form.teacherName"  disabled />
+          <el-input v-model="form.teacherName" disabled />
+        </el-form-item>
+        <el-form-item label="学分" prop="credit">
+          <el-input v-model="form.credit" disabled />
         </el-form-item>
         <el-form-item label="考试状态" prop="examStatus">
           <el-select v-model="form.examStatus" placeholder="请选择考试状态">
             <el-option v-for="dict in examStatusList" :key="dict.value" :label="dict.label"
               :value="parseInt(dict.value)"></el-option>
           </el-select>
+        </el-form-item>
+        <el-form-item label="支付状态" prop="payStatus">
+          <el-select v-model="form.payStatus" placeholder="请选择支付状态">
+            <el-option v-for="dict in payStatusList" :key="dict.value" :label="dict.label"
+              :value="parseInt(dict.value)">
+            </el-option>
+          </el-select>        </el-form-item>
+        <el-form-item label="成绩" prop="score">
+          <el-input type="number" v-model="form.score" />
         </el-form-item>
         <!--————————————————————————————————————————————————————————————————————————— 上面是子表页面、下面是结束———————————————————————————————————————————————————————————————————— -->
 
@@ -123,10 +142,14 @@
   import {
     listTeacherCourse
   } from "@/api/custom/teacherCourse";
+  import {
+    listUser
+  } from "@/api/custom/user";
   export default {
     name: "StudentCourse",
     data() {
       return {
+        userNameList: [],
         //课程名称
         courseNameList: [],
         //考试状态
@@ -144,9 +167,6 @@
         }, {
           "label": "已支付",
           "value": "1"
-        }, {
-          "label": "已取消",
-          "value": "2"
         }],
         // 遮罩层
         loading: true,
@@ -247,8 +267,18 @@
     created() {
       this.getList();
       this.getTeacherCourseList();
+      this.getUserNameList();
     },
     methods: {
+      getUserNameList() {
+        listUser({}).then(response => {
+          this.userNameList = response.rows;
+        });
+      },
+      selectUserNameChange(index) {
+        this.form.userName = this.userNameList[index].name;
+        this.form.userId = this.userNameList[index].id;
+      },
       /**获取课程名称下拉列表 **/
       getTeacherCourseList() {
         listTeacherCourse({}).then(response => {
@@ -256,11 +286,15 @@
         });
       },
       selectTeacherCourseChange(index) {
-        this.form.courseName = this.courseNameList[index].name;
-        this.form.courseId = this.courseNameList[index].id;
+        this.form.courseName = this.courseNameList[index].courseName;
+        this.form.courseId = this.courseNameList[index].courseId;
         this.form.teacherId = this.courseNameList[index].teacherId;
         this.form.teacherName = this.courseNameList[index].teacherName;
-        this.$set(this.form,'teacherName',this.courseNameList[index].teacherName)
+        this.form.credit = this.courseNameList[index].credit;
+        this.form.teacherCourseId = this.courseNameList[index].id;
+        this.$set(this.form, 'teacherName', this.courseNameList[index].teacherName)
+        this.$set(this.form, 'courseName', this.courseNameList[index].courseName)
+        this.$set(this.form, 'credit', this.courseNameList[index].credit)
       },
       /** 查询学生选课管理列表 */
       getList() {
@@ -340,6 +374,8 @@
                 this.getList();
               });
             } else {
+              this.form.userId = this.$store.state.user.id;
+              this.form.userName = this.$store.state.user.nickName;
               addStudentCourse(this.form).then(response => {
                 this.$modal.msgSuccess("新增成功");
                 this.open = false;

@@ -1,6 +1,8 @@
 package com.ysir.custom.service;
 
 import java.util.List;
+
+import com.ysir.custom.common.AjaxResult;
 import com.ysir.custom.entity.TUserCourse;
 
 /**
@@ -47,7 +49,7 @@ public interface ITUserCourseService {
      * @param ids 需要删除的学生选课管理主键集合
      * @return 影响行数量
      */
-    int deleteTUserCourseByIds(Long[] ids);
+    AjaxResult deleteTUserCourseByIds(Long[] ids);
 
     /**
      * 删除学生选课管理信息
@@ -56,4 +58,8 @@ public interface ITUserCourseService {
      * @return 影响行数量
      */
     int deleteTUserCourseById(Long id);
+
+    AjaxResult addBatch(List<Long> ids);
+
+    AjaxResult paySuccess(Long[] ids);
 }

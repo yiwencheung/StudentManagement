@@ -19,15 +19,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="payStatus"    column="pay_status"    />
         <result property="createTime"    column="create_time"    />
         <result property="updateTime"    column="update_time"    />
+        <result property="startTime"    column="start_time"    />
+        <result property="endTime"    column="end_time"    />
+        <result property="price"    column="price"    />
     </resultMap>
 
     <sql id="selectTUserCourseVo">
-        select id, user_id, user_name, teacher_course_id, course_id, course_name, teacher_id, teacher_name, credit, score, exam_status, pay_status, create_time, update_time from t_user_course
+        select id, user_id, user_name,start_time,end_time, teacher_course_id,price, course_id, course_name, teacher_id, teacher_name, credit, score, exam_status, pay_status, create_time, update_time from t_user_course
     </sql>
 
     <select id="selectTUserCourseList" parameterType="TUserCourse" resultMap="TUserCourseResult">
         <include refid="selectTUserCourseVo"/>
-        <where>  
+        <where>
+            <if test="userId != null"> and user_id = #{userId}</if>
+            <if test="teacherCourseId != null"> and teacher_course_id = #{teacherCourseId}</if>
             <if test="userName != null  and userName != ''"> and user_name like concat('%', #{userName}, '%')</if>
             <if test="courseName != null  and courseName != ''"> and course_name like concat('%', #{courseName}, '%')</if>
             <if test="params.beginScore != null and params.beginScore != '' and params.endScore != null and params.endScore != ''"> and score between #{params.beginScore} and #{params.endScore}</if>
@@ -40,7 +45,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectTUserCourseVo"/>
         where id = #{id}
     </select>
-        
+    <select id="selectTUserCourseByIds" resultType="com.ysir.custom.entity.TUserCourse"
+            parameterType="Long">
+        <include refid="selectTUserCourseVo"/>
+        where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+
     <insert id="insertTUserCourse" parameterType="TUserCourse" useGeneratedKeys="true" keyProperty="id">
         insert into t_user_course
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -57,6 +70,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="payStatus != null">pay_status,</if>
             <if test="createTime != null">create_time,</if>
             <if test="updateTime != null">update_time,</if>
+            <if test="startTime != null">start_time,</if>
+            <if test="endTime != null">end_time,</if>
+            <if test="price != null">price,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="userId != null">#{userId},</if>
@@ -72,6 +88,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="payStatus != null">#{payStatus},</if>
             <if test="createTime != null">#{createTime},</if>
             <if test="updateTime != null">#{updateTime},</if>
+            <if test="startTime != null">#{startTime},</if>
+            <if test="endTime != null">#{endTime},</if>
+            <if test="price != null">#{price},</if>
          </trim>
     </insert>
 
@@ -91,6 +110,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="payStatus != null">pay_status = #{payStatus},</if>
             <if test="createTime != null">create_time = #{createTime},</if>
             <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="price != null">price = #{price},</if>
+            <if test="startTime != null">start_time = #{startTime},</if>
+            <if test="endTime != null">end_time = #{endTime},</if>
         </trim>
         where id = #{id}
     </update>
