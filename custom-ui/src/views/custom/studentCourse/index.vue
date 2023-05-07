@@ -112,7 +112,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="支付状态" prop="payStatus">
-          <el-select v-model="form.payStatus" placeholder="请选择支付状态">
+          <el-select disabled v-model="form.payStatus" placeholder="请选择支付状态">
             <el-option v-for="dict in payStatusList" :key="dict.value" :label="dict.label"
               :value="parseInt(dict.value)">
             </el-option>

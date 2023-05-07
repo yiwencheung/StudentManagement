@@ -25,15 +25,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="selectTTeacherCourseList" parameterType="TTeacherCourse" resultMap="TTeacherCourseResult">
         <include refid="selectTTeacherCourseVo"/>
         <where>  
-            <if test="teacherName != null  and teacherName != ''"> and teacher_name like concat('%', #{teacherName}, '%')</if>
-            <if test="courseName != null  and courseName != ''"> and course_name like concat('%', #{courseName}, '%')</if>
-            <if test="selectedNum != null "> and selected_num &gt; #{selectedNum}</if>
+            <if test="teacherName != null  and teacherName != ''"> and ttc.teacher_name like concat('%', #{teacherName}, '%')</if>
+            <if test="courseName != null  and courseName != ''"> and ttc.course_name like concat('%', #{courseName}, '%')</if>
+            <if test="selectedNum != null "> and ttc.selected_num &gt; #{selectedNum}</if>
         </where>
     </select>
     
     <select id="selectTTeacherCourseById" parameterType="Long" resultMap="TTeacherCourseResult">
         <include refid="selectTTeacherCourseVo"/>
-        where id = #{id}
+        where ttc.id = #{id}
     </select>
     <select id="selectTTeacherCourseByIds" resultType="com.ysir.custom.entity.TTeacherCourse"
             parameterType="java.util.List">
