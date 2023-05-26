@@ -116,8 +116,6 @@ export default {
         this.studentCourseList = response.rows;
         this.total = response.total;
         this.loading = false;
-        console.log(this.queryParams);
-        console.log(this.studentCourseList);
       });
     },
     // 取消按钮

@@ -168,7 +168,6 @@ export default {
         this.user = response.data;
         this.roleGroup = response.roleGroup;
         this.postGroup = response.postGroup;
-        console.log(this.user);
         this.queryParams.teacherName = this.user.name;
         this.getList();
       });
