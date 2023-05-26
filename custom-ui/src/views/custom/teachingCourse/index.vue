@@ -32,8 +32,8 @@
       </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
-          <el-button size="mini" type="text" icon="el-icon-s-custom" @click="handleStudentList(scope.row)"
-            >学生名单</el-button>
+          <el-button size="mini" type="text" icon="el-icon-s-custom"
+            @click="handleStudentList(scope.row)">学生名单</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -42,7 +42,7 @@
       @pagination="getList" />
     <!--———————————————————————————————————————————————————————————————————————————— 上面是表格、下面是添加编辑表单页面—————————————————————————————————————————————————————————————————————— -->
 
-    <!-- 添加或修改教师课程管理对话框 -->
+    <!-- 添加学生名单对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="80%" append-to-body>
       <StudentList :teacherCourseId="selectedTeacherCourseId" />
     </el-dialog>
@@ -101,51 +101,6 @@ export default {
         courseName: null,
         selectedNum: null,
       },
-      // 表单参数
-      form: {},
-      // 表单校验
-      rules: {
-        teacherId: [{
-          required: true,
-          message: "教师编号不能为空",
-          trigger: "blur"
-        }],
-        teacherName: [{
-          required: true,
-          message: "教师名称不能为空",
-          trigger: "blur"
-        }],
-        courseId: [{
-          required: true,
-          message: "课程编号不能为空",
-          trigger: "blur"
-        }],
-        courseName: [{
-          required: true,
-          message: "课程名称不能为空",
-          trigger: "blur"
-        }],
-        studentNum: [{
-          required: true,
-          message: "可容纳学生数不能为空",
-          trigger: "blur"
-        }],
-        selectedNum: [{
-          required: true,
-          message: "已选择学生数不能为空",
-          trigger: "blur"
-        }],
-        createTime: [{
-          required: true,
-          message: "创建时间不能为空",
-          trigger: "blur"
-        }],
-        updateTime: [{
-          required: true,
-          message: "更新时间不能为空",
-          trigger: "blur"
-        }]
-      }
     };
   },
   created() {
@@ -185,11 +140,6 @@ export default {
         this.loading = false;
       });
     },
-    // 取消按钮
-    cancel() {
-      this.open = false;
-      this.reset();
-    },
     /** 搜索按钮操作 */
     handleQuery() {
       this.queryParams.pageNum = 1;
@@ -206,54 +156,12 @@ export default {
       this.single = selection.length !== 1;
       this.multiple = !selection.length;
     },
-    /** 修改按钮操作 */
-    handleUpdate(row) {
-      this.isEdit = true;
-      this.reset();
-      const id = row.id || this.ids;
-      getTeacherCourse(id).then(response => {
-        this.form = response.data;
-        this.open = true;
-        this.title = "修改教师课程管理";
-      });
-    },
     handleStudentList(row) {
       this.isEdit = true;
       const id = row.id || this.ids;
       this.selectedTeacherCourseId = id;
       this.open = true;
-      this.title = "学生列表";
-    },
-    /** 提交按钮 */
-    submitForm() {
-      this.$refs["form"].validate(valid => {
-        if (valid) {
-          if (this.form.id != null) {
-            updateTeacherCourse(this.form).then(response => {
-              this.$modal.msgSuccess("修改成功");
-              this.open = false;
-              this.getList();
-            });
-          }
-          else {
-            addTeacherCourse(this.form).then(response => {
-              this.$modal.msgSuccess("新增成功");
-              this.open = false;
-              this.getList();
-            });
-          }
-        }
-      });
-    },
-    /** 删除按钮操作 */
-    handleDelete(row) {
-      const ids = row.id || this.ids;
-      this.$modal.confirm("是否确认删除教师课程管理编号为\"" + ids + "\"的数据项？").then(function () {
-        return delTeacherCourse(ids);
-      }).then(() => {
-        this.getList();
-        this.$modal.msgSuccess("删除成功");
-      }).catch(() => { });
+      this.title = "学生列表：" + row.teacherName + "-" + row.courseName;
     },
     getUser() {
       getUserProfile().then(response => {

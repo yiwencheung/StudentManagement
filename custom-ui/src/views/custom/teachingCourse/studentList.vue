@@ -19,15 +19,9 @@
 <script>
 import {
   listStudentCourse,
-  getStudentCourse,
-  delStudentCourse,
   addStudentCourse,
   updateStudentCourse,
-  addBatch
 } from "@/api/custom/studentCourse";
-import {
-  listTeacherCourse
-} from "@/api/custom/teacherCourse";
 import {
   listUser
 } from "@/api/custom/user";
@@ -69,14 +63,6 @@ export default {
         "label": "已考试",
         "value": "1"
       }],
-      //支付状态
-      payStatusList: [{
-        "label": "未支付",
-        "value": "0"
-      }, {
-        "label": "已支付",
-        "value": "1"
-      }],
       // 遮罩层
       loading: true,
       isEdit: false,
@@ -110,66 +96,6 @@ export default {
         pageNum: 1,
         pageSize: 10,
       },
-      // 表单参数
-      form: {},
-      // 表单校验
-      rules: {
-        userName: [{
-          required: true,
-          message: "学生姓名不能为空",
-          trigger: "blur"
-        }],
-        teacherCourseId: [{
-          required: true,
-          message: "选课编号不能为空",
-          trigger: "blur"
-        }],
-        courseId: [{
-          required: true,
-          message: "课程编号不能为空",
-          trigger: "blur"
-        }],
-        courseName: [{
-          required: true,
-          message: "课程名称不能为空",
-          trigger: "blur"
-        }],
-        teacherId: [{
-          required: true,
-          message: "教师编号不能为空",
-          trigger: "blur"
-        }],
-        teacherName: [{
-          required: true,
-          message: "教师名称不能为空",
-          trigger: "blur"
-        }],
-        credit: [{
-          required: true,
-          message: "课程学分不能为空",
-          trigger: "blur"
-        }],
-        examStatus: [{
-          required: true,
-          message: "考试状态不能为空",
-          trigger: "change"
-        }],
-        payStatus: [{
-          required: true,
-          message: "支付状态不能为空",
-          trigger: "change"
-        }],
-        createTime: [{
-          required: true,
-          message: "创建时间不能为空",
-          trigger: "blur"
-        }],
-        updateTime: [{
-          required: true,
-          message: "更新时间不能为空",
-          trigger: "blur"
-        }]
-      }
     };
   },
   created() {
@@ -182,21 +108,6 @@ export default {
       listUser({}).then(response => {
         this.userNameList = response.rows;
       });
-    },
-    selectUserNameChange(index) {
-      this.form.userName = this.userNameList[index].name;
-      this.form.userId = this.userNameList[index].id;
-    },
-    selectTeacherCourseChange(index) {
-      this.form.courseName = this.courseNameList[index].courseName;
-      this.form.courseId = this.courseNameList[index].courseId;
-      this.form.teacherId = this.courseNameList[index].teacherId;
-      this.form.teacherName = this.courseNameList[index].teacherName;
-      this.form.credit = this.courseNameList[index].credit;
-      this.form.teacherCourseId = this.courseNameList[index].id;
-      this.$set(this.form, 'teacherName', this.courseNameList[index].teacherName)
-      this.$set(this.form, 'courseName', this.courseNameList[index].courseName)
-      this.$set(this.form, 'credit', this.courseNameList[index].credit)
     },
     /** 查询学生选课管理列表 */
     getList() {
@@ -233,22 +144,6 @@ export default {
         updateTime: null
       };
       this.resetForm("form");
-    },
-    /** 搜索按钮操作 */
-    handleQuery() {
-      this.queryParams.pageNum = 1;
-      this.getList();
-    },
-    /** 重置按钮操作 */
-    resetQuery() {
-      this.resetForm("queryForm");
-      this.handleQuery();
-    },
-    // 多选框选中数据
-    handleSelectionChange(selection) {
-      this.ids = selection.map(item => item.id)
-      this.single = selection.length !== 1
-      this.multiple = !selection.length
     },
     /** 提交按钮 */
     submitForm() {
