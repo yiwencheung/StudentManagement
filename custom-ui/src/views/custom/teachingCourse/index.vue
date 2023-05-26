@@ -8,10 +8,6 @@
       <el-form-item label="课程名称" prop="courseName">
         <el-input v-model="queryParams.courseName" placeholder="请输入课程名称" clearable @keyup.enter.native="handleQuery" />
       </el-form-item>
-      <el-form-item label="已选择学生数" prop="selectedNum">
-        <el-input type="number" v-model="queryParams.selectedNum" placeholder="请输入已选择学生数" clearable
-          @keyup.enter.native="handleQuery" />
-      </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
@@ -23,13 +19,11 @@
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="课堂编号" align="center" prop="id" />
       <el-table-column label="课程编号" align="center" prop="courseId" />
+      <el-table-column label="课程类型" align="center" prop="courseType" />
+      <!-- TODO: 等后端实现 API 吧 -->
       <el-table-column label="课程名称" align="center" prop="courseName" />
       <el-table-column label="可容纳学生数" align="center" prop="studentNum" />
       <el-table-column label="已选择学生数" align="center" prop="selectedNum" />
-      <el-table-column label="创建时间" align="center" prop="createTime" width="180">
-      </el-table-column>
-      <el-table-column label="更新时间" align="center" prop="updateTime" width="180">
-      </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button size="mini" type="text" icon="el-icon-s-custom"
@@ -104,9 +98,11 @@ export default {
     };
   },
   created() {
+    this.queryParams.teacherId = this.$store.state.user.id;
+    this.queryParams.teacherName = this.$store.state.user.nickName;
     this.getUserList();
     this.getCourseList();
-    this.getUser();
+    this.getList();
   },
   methods: {
     /**获取教师名称下拉列表 **/
@@ -162,15 +158,6 @@ export default {
       this.selectedTeacherCourseId = id;
       this.open = true;
       this.title = "学生列表：" + row.teacherName + "-" + row.courseName;
-    },
-    getUser() {
-      getUserProfile().then(response => {
-        this.user = response.data;
-        this.roleGroup = response.roleGroup;
-        this.postGroup = response.postGroup;
-        this.queryParams.teacherName = this.user.name;
-        this.getList();
-      });
     },
   },
   components: { StudentList }
