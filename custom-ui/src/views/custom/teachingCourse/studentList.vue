@@ -129,53 +129,6 @@ export default {
         console.log(this.studentCourseList);
       });
     },
-    // 取消按钮
-    cancel() {
-      this.open = false;
-      this.reset();
-    },
-    // 表单重置
-    reset() {
-      this.form = {
-        id: null,
-        userId: null,
-        userName: null,
-        teacherCourseId: null,
-        courseId: null,
-        courseName: null,
-        teacherId: null,
-        teacherName: null,
-        credit: null,
-        score: null,
-        examStatus: null,
-        payStatus: null,
-        createTime: null,
-        updateTime: null
-      };
-      this.resetForm("form");
-    },
-    /** 提交按钮 */
-    submitForm() {
-      this.$refs["form"].validate(valid => {
-        if (valid) {
-          if (this.form.id != null) {
-            updateStudentCourse(this.form).then(response => {
-              this.$modal.msgSuccess("修改成功");
-              this.open = false;
-              this.getList();
-            });
-          } else {
-            this.form.userId = this.$store.state.user.id;
-            this.form.userName = this.$store.state.user.nickName;
-            addStudentCourse(this.form).then(response => {
-              this.$modal.msgSuccess("新增成功");
-              this.open = false;
-              this.getList();
-            });
-          }
-        }
-      });
-    },
     handleExamStatusChange(row) {
       this.changed = true;
       if (row.examStatus == "0") {
