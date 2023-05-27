@@ -1,18 +1,27 @@
 <template>
   <div class="app-container">
-    <el-table v-loading="loading" :data="studentCourseList" @selection-change="handleSelectionChange">
+    <el-table v-loading="loading" :data="studentCourseList">
       <el-table-column label="学生编号" align="center" prop="userId" />
       <el-table-column label="学生姓名" align="center" prop="userName" />
-      <el-table-column label="课程成绩" align="center" prop="score" />
       <el-table-column label="考试状态" align="center" prop="examStatus">
         <template slot-scope="scope">
-          <span>{{ examStatusList[scope.row.examStatus].label }}</span>
+          <el-select v-model="scope.row.examStatus" placeholder="请选择" @change="handleExamStatusChange(scope.row)">
+            <el-option v-for="item in examStatusList" :key="item.value" :label="item.label" :value="parseInt(item.value)" />
+          </el-select>
+        </template>
+      </el-table-column>
+      <el-table-column label="课程成绩" align="center" prop="score" >
+        <template slot-scope="scope">
+          <el-input-number v-model="scope.row.score" :min="0" :max="100" :step="1" controls-position="right" @change="handleScoreChange(scope.row)" v-if="scope.row.examStatus == 1"></el-input-number>
         </template>
       </el-table-column>
     </el-table>
 
     <pagination v-show="total>0" :total="total" :page.sync="queryParams.pageNum" :limit.sync="queryParams.pageSize"
       @pagination="getList" />
+
+    <!-- Button for saving -->
+    <el-button type="primary" @click="save" :disabled="!changed">保存</el-button>
   </div>
 </template>
 
@@ -96,6 +105,7 @@ export default {
         pageNum: 1,
         pageSize: 10,
       },
+      changed: false,
     };
   },
   created() {
@@ -116,6 +126,7 @@ export default {
         this.studentCourseList = response.rows;
         this.total = response.total;
         this.loading = false;
+        console.log(this.studentCourseList);
       });
     },
     // 取消按钮
@@ -165,6 +176,27 @@ export default {
         }
       });
     },
+    handleExamStatusChange(row) {
+      this.changed = true;
+      if (row.examStatus == "0") {
+        row.score = null;
+      }
+    },
+    handleScoreChange(row) {
+      this.changed = true;
+    },
+    save(){
+      let successCount = 0;
+      this.studentCourseList.forEach(element => {
+        updateStudentCourse(element).then(response => {
+          successCount++;
+          if (successCount === this.studentCourseList.length) {
+            this.$modal.msgSuccess("修改成功");
+            this.getList();
+          }
+        });
+      });
+    }
   }
 };
 </script>
