@@ -107,7 +107,7 @@
           <el-input v-model="form.credit" disabled />
         </el-form-item>
         <el-form-item label="考试状态" prop="examStatus">
-          <el-select v-model="form.examStatus" placeholder="请选择考试状态">
+          <el-select v-model="form.examStatus" placeholder="请选择考试状态" @change="handleExamStatusChange">
             <el-option v-for="dict in examStatusList" :key="dict.value" :label="dict.label"
               :value="parseInt(dict.value)"></el-option>
           </el-select>
@@ -119,7 +119,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="成绩" prop="score">
-          <el-input type="number" v-model="form.score" />
+          <el-input type="number" v-model="form.score" :disabled="form.examStatus != '1'"></el-input>
         </el-form-item>
         <!--————————————————————————————————————————————————————————————————————————— 上面是子表页面、下面是结束———————————————————————————————————————————————————————————————————— -->
 
@@ -396,6 +396,12 @@ export default {
         this.$modal.msgSuccess("删除成功");
       }).catch(() => { });
     },
+    /** 表单考试状态更改 */
+    handleExamStatusChange(val) {
+      if (val == "0") {
+        this.form.score = null;
+      }
+    }
   }
 };
 </script>
