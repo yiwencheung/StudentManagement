@@ -30,7 +30,7 @@
     <!--———————————————————————————————————————————————————————————————————————————— 上面是搜索表单、下面是表格—————————————————————————————————————————————————————————————————————————— -->
     <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
-        <el-button type="primary" plain icon="el-icon-plus" size="mini" @click="handleAdd">新增</el-button>
+        <el-button type="primary" plain icon="el-icon-plus" size="mini" @click="$router.push('/SelectNewCourse')">新增</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button type="success" plain icon="el-icon-edit" size="mini" @click="handlePay">付款</el-button>
@@ -98,55 +98,6 @@
     <pagination v-show="total > 0" :total="total" :page.sync="queryParams.pageNum" :limit.sync="queryParams.pageSize"
       @pagination="getList" />
     <!--———————————————————————————————————————————————————————————————————————————— 上面是表格、下面是添加编辑表单页面—————————————————————————————————————————————————————————————————————— -->
-
-    <!-- 添加或修改学生选课管理对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="1000px" append-to-body center>
-      <el-table v-loading="loading" :data="courseNameList" @selection-change="handleDialogSelectionChange">
-        <el-table-column type="selection" width="55" align="center" />
-        <el-table-column label="课堂编号编号" align="center" prop="id" />
-        <el-table-column label="教师名称" align="center" prop="teacherName">
-          <template slot-scope="scope">
-            <el-tooltip :content="'编号：' + scope.row.teacherId" placement="top" effect="dark">
-              <span>{{ scope.row.teacherName }}</span>
-            </el-tooltip>
-          </template>
-        </el-table-column>
-        <el-table-column label="课程名称" align="center" prop="courseName">
-          <template slot-scope="scope">
-            <el-tooltip :content="'编号：' + scope.row.courseId" placement="top" effect="dark">
-              <span>{{ scope.row.courseName }}</span>
-            </el-tooltip>
-          </template>
-        </el-table-column>
-        <el-table-column label="课程学分" align="center" prop="credit">
-        </el-table-column>
-        <el-table-column label="课程价格" align="center" prop="price">
-        </el-table-column>
-        <el-table-column label="可容纳学生数" align="center" prop="studentNum" />
-        <el-table-column label="已选择学生数" align="center" prop="selectedNum" />
-        <el-table-column label="开始时间" align="center" width="180">
-          <template slot-scope="scope">
-            <el-tooltip :content="scope.row.startTime" placement="top" effect="dark">
-              <span>{{ new Date(scope.row.startTime).toISOString().slice(0, 10) }}</span>
-            </el-tooltip>
-          </template>
-        </el-table-column>
-        <el-table-column label="结束时间" align="center" width="180">
-          <template slot-scope="scope">
-            <el-tooltip :content="scope.row.endTime" placement="top" effect="dark">
-              <span>{{ new Date(scope.row.endTime).toISOString().slice(0, 10) }}</span>
-            </el-tooltip> 
-          </template>
-        </el-table-column>
-      </el-table>
-
-      <pagination v-show="totalDialog > 0" :total="totalDialog" :page.sync="queryParamsDialog.pageNum"
-        :limit.sync="queryParamsDialog.pageSize" @pagination="getTeacherCourseList()" />
-      <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitDialog">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
-      </div>
-    </el-dialog>
 
     <el-dialog :title="title" :visible.sync="openPay" width="1000px" append-to-body center>
       <el-descriptions border title="付款信息" style="margin-top: 15px;" v-for="item in payList">
@@ -352,30 +303,6 @@ export default {
         this.userNameList = response.rows;
       });
     },
-    selectUserNameChange(index) {
-      this.form.userName = this.userNameList[index].name;
-      this.form.userId = this.userNameList[index].id;
-    },
-    /**获取课程名称下拉列表 **/
-    getTeacherCourseList() {
-      listTeacherCourse(this.queryParamsDialog).then(response => {
-        this.courseNameList = response.rows;
-        this.totalDialog = response.total;
-        this.loading = false;
-      });
-    },
-    selectTeacherCourseChange(index) {
-      this.form.courseName = this.courseNameList[index].courseName;
-      this.form.courseId = this.courseNameList[index].courseId;
-      this.form.teacherId = this.courseNameList[index].teacherId;
-      this.form.teacherName = this.courseNameList[index].teacherName;
-      this.form.credit = this.courseNameList[index].credit;
-      this.form.teacherCourseId = this.courseNameList[index].id;
-      this.form.price = this.courseNameList[index].price;
-      this.$set(this.form, 'teacherName', this.courseNameList[index].teacherName)
-      this.$set(this.form, 'courseName', this.courseNameList[index].courseName)
-      this.$set(this.form, 'credit', this.courseNameList[index].credit)
-    },
     /** 查询学生选课管理列表 */
     getList() {
       this.loading = true;
@@ -429,20 +356,6 @@ export default {
       this.single = selection.length !== 1
       this.multiple = !selection.length
     },
-    // 多选框选中数据
-    handleDialogSelectionChange(selection) {
-      this.idsDialog = selection.map(item => item.id)
-      this.singleDialog = selection.length !== 1
-      this.multipleDialog = !selection.length
-    },
-    /** 新增按钮操作 */
-    handleAdd() {
-      this.loading = true;
-      this.reset();
-      this.getTeacherCourseList();
-      this.open = true;
-      this.title = "选课";
-    },
     accAdd(arg1, arg2) {
       var r1, r2, m;
       try {
@@ -494,38 +407,6 @@ export default {
       this.payList.push(row);
       this.totalPrice = row.price;
       this.openPay = true;
-    },
-    /** 提交按钮 */
-    submitForm() {
-      this.$refs["form"].validate(valid => {
-        if (valid) {
-          if (this.form.id != null) {
-            updateStudentCourse(this.form).then(response => {
-              this.$modal.msgSuccess("修改成功");
-              this.open = false;
-              this.getList();
-            });
-          } else {
-            this.form.userId = this.$store.state.user.id;
-            this.form.userName = this.$store.state.user.nickName;
-            addStudentCourse(this.form).then(response => {
-              this.$modal.msgSuccess("新增成功");
-              this.open = false;
-              this.getList();
-            });
-          }
-        }
-      });
-    },
-    submitDialog() {
-      const ids = this.idsDialog;
-      this.$modal.confirm('是否确认添加选中课程').then(function () {
-        return addBatch(ids);
-      }).then(() => {
-        this.getList();
-        this.$modal.msgSuccess("添加成功");
-        this.open = false;
-      }).catch(() => { });
     },
     /** 删除按钮操作 */
     handleDelete(row) {
