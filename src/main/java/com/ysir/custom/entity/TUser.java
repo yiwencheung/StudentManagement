@@ -102,7 +102,7 @@ public class TUser extends BaseEntity {
      *
      * @return 结果
      */
-    public  boolean isAdmin() {
+    public boolean isAdmin() {
         return (ObjectUtil.isNotEmpty(userId) && userId == 1 || (StrUtil.isNotBlank(userName) && userName.equals("admin")) );
     }
 

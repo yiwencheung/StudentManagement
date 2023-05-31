@@ -6,6 +6,7 @@ import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.ObjectUtil;
 import com.ysir.custom.common.AjaxResult;
 import com.ysir.custom.entity.TTeacherCourse;
+import com.ysir.custom.entity.TUser;
 import com.ysir.custom.entity.TUserCourse;
 import com.ysir.custom.mapper.TTeacherCourseMapper;
 import com.ysir.custom.mapper.TUserCourseMapper;
@@ -89,8 +90,13 @@ public class TUserCourseServiceImpl implements ITUserCourseService {
 
     @Override
     public int updateTUserCourse(TUserCourse tUserCourse) {
-        tUserCourse.setUpdateTime(new Date());
-        return tUserCourseMapper.updateTUserCourse(tUserCourse);
+        if(tUserCourse.getTeacherId()!=ServerConfigUtil.getUserId()&!(ServerConfigUtil.getLoginUser().getUser().isAdmin())){
+            AjaxResult.error("没有权限修改此内容");
+            return 0;
+        }
+        else{
+            tUserCourse.setUpdateTime(new Date());
+            return tUserCourseMapper.updateTUserCourse(tUserCourse);}
     }
 
     /**
