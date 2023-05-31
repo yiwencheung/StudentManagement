@@ -72,9 +72,9 @@
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)"
-            v-hasPermi="['custom:studentCourse:edit']">修改</el-button>
+            v-hasPermi="['custom:studentCourse:edit']" :disabled="!canEdit(scope.row)">修改</el-button>
           <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)"
-            v-hasPermi="['custom:studentCourse:remove']">删除</el-button>
+            v-hasPermi="['custom:studentCourse:remove']" :disabled="!canEdit(scope.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -401,7 +401,14 @@ export default {
       if (val == "0") {
         this.form.score = null;
       }
-    }
+    },
+    canEdit(row) {
+      if (this.$store.state.user.roles.includes("admin")) {
+        return true;
+      } else {
+        return row.teacherId === this.$store.state.user.id;
+      }
+    },
   }
 };
 </script>
